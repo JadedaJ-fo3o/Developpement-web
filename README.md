@@ -1,154 +1,163 @@
 # Developpement-web
 Projet sur le developpement web
-Structure:
-![alt text](image-1.png)
-![alt text](image-2.png)
 
-Methodes prevus:
-app.py:
-    from flask import Flask
-    from config import SECRET_KEY, DATABASE
-    from routes.auth import auth_bp
-    from routes.series import series_bp
-    from routes.recommendations import recommendations_bp
-    from routes.watchlist import watchlist_bp
-    import sqlite3
+# GenFlix — Structure du projet
 
-    def get_db():
-        ...
-    def init_db():
-        ...
-    def create_app():
-        app = Flask(__name__)
-        app.secret_key = SECRET_KEY
-        init_db()
-        app.register_blueprint(auth_bp)
-        app.register_blueprint(series_bp)
-        app.register_blueprint(recommendations_bp)
-        app.register_blueprint(watchlist_bp)
-        return app
+## Architecture des fichiers
+```
+genflix/
+├── app.py
+├── config.py
+├── database.db
+├── routes/
+│   ├── auth.py
+│   ├── series.py
+│   ├── recommendations.py
+│   └── watchlist.py
+├── services/
+│   ├── tvmaze.py
+│   └── gemini.py
+├── templates/
+│   ├── base.html
+│   ├── auth.html
+│   ├── series.html
+│   ├── recommendations.html
+│   └── watchlist.html
+└── static/
+    ├── css/style.css
+    └── js/
+        ├── auth.js
+        ├── search.js
+        ├── rating.js
+        └── recommendations.js
+```
 
-    app = create_app()
-    if __name__ == "__main__":
-        app.run(debug=True, port=4000)
+## Méthodes prévues
 
-config.py:
-    SECRET_KEY = "genflix_secret_key"
-    DATABASE = "database.db"
-    GEMINI_API_KEY = "ta_clé_gemini_ici"
+### `app.py`
+```python
+from flask import Flask
+from config import SECRET_KEY, DATABASE
+from routes.auth import auth_bp
+from routes.series import series_bp
+from routes.recommendations import recommendations_bp
+from routes.watchlist import watchlist_bp
+import sqlite3
 
-routes/auth.py:
-    from flask import Blueprint, session, g
-    from app import get_db
-    import functools
+def get_db(): ...
+def init_db(): ...
+def create_app(): ...
 
-    auth_bp = Blueprint('auth', __name__)
+app = create_app()
+if __name__ == "__main__":
+    app.run(debug=True, port=4000)
+```
 
-    def login_required(f):
-        ...
-    @auth_bp.route('/login', methods=['GET', 'POST'])
-    def login():
-        ...
-    @auth_bp.route('/register', methods=['GET', 'POST'])
-    def register():
-        ...
-    @auth_bp.route('/logout')
-    def logout():
-        ...
+### `config.py`
+```python
+SECRET_KEY = "genflix_secret_key"
+DATABASE = "database.db"
+GEMINI_API_KEY = "ta_clé_gemini_ici"
+```
 
-routes/series.py:
-    from flask import Blueprint
-    from app import get_db
-    from routes.auth import login_required
-    from services.tvmaze import search_shows
+### `routes/auth.py`
+```python
+auth_bp = Blueprint('auth', __name__)
 
-    series_bp = Blueprint('series', __name__)
-    @series_bp.route('/')
-    @login_required
-    def home():
-        ...
-    @series_bp.route('/api/search')
-    @login_required
-    def api_search():
-        ...
-    @series_bp.route('/rate', methods=['POST'])
-    @login_required
-    def rate():
-        ...
-    @series_bp.route('/add', methods=['POST'])
-    @login_required
-    def add_series():
-        ...
+def login_required(f): ...          # décorateur — vérifie session, stocke g.user
 
-routes/recommendations.py:
-    from flask import Blueprint
-    from app import get_db
-    from routes.auth import login_required
-    from services.gemini import analyze_profile, get_recommendations
+@auth_bp.route('/login', methods=['GET', 'POST'])
+def login(): ...
 
-    recommendations_bp = Blueprint('recommendations', __name__)
+@auth_bp.route('/register', methods=['GET', 'POST'])
+def register(): ...
 
-    @recommendations_bp.route('/recommandations')
-    @login_required
-    def recommendations_page():
-        ...
+@auth_bp.route('/logout')
+def logout(): ...
+```
 
-    @recommendations_bp.route('/api/recommandations')
-    @login_required
-    def api_recommendations():
-        ...
+### `routes/series.py`
+```python
+series_bp = Blueprint('series', __name__)
 
-routes/watchlist.py:
-    from flask import Blueprint
-    from app import get_db
-    from routes.auth import login_required
+@series_bp.route('/')
+@login_required
+def home(): ...                     # affiche series.html + ratings de l'user
 
-    watchlist_bp = Blueprint('watchlist', __name__)
+@series_bp.route('/api/search')
+@login_required
+def api_search(): ...               # GET ?q=... → JSON via TVmaze
 
-    @watchlist_bp.route('/a-voir')
-    @login_required
-    def watchlist_page():
-        ...
+@series_bp.route('/rate', methods=['POST'])
+@login_required
+def rate(): ...                     # enregistre sentiment en DB
 
-    @watchlist_bp.route('/a-voir/add', methods=['POST'])
-    @login_required
-    def add_to_watchlist():
-        ...
+@series_bp.route('/add', methods=['POST'])
+@login_required
+def add_series(): ...               # ajoute une série aux ratings
+```
 
-    @watchlist_bp.route('/a-voir/remove', methods=['POST'])
-    @login_required
-    def remove_watchlist():
-        ...
+### `routes/recommendations.py`
+```python
+recommendations_bp = Blueprint('recommendations', __name__)
 
-services/tvmaze.py:
-    import requests
-    def search_shows(query):
-        ...
-    def get_show_info(show_id):
-        ...
+@recommendations_bp.route('/recommandations')
+@login_required
+def recommendations_page(): ...     # affiche recommendations.html
 
-services/gemini.py:
-    import requests
-    from config import GEMINI_API_KEY
+@recommendations_bp.route('/api/recommandations')
+@login_required
+def api_recommendations(): ...      # appelle Gemini → JSON
+```
 
-    def analyze_profile(ratings_list):
-        ...
+### `routes/watchlist.py`
+```python
+watchlist_bp = Blueprint('watchlist', __name__)
 
-    def get_recommendations(profile_text):
-        ...
+@watchlist_bp.route('/a-voir')
+@login_required
+def watchlist_page(): ...           # affiche watchlist.html
 
-static/js/search.js:
-    async function searchShows(query) {}
-    function displayResults(shows) {}
+@watchlist_bp.route('/a-voir/add', methods=['POST'])
+@login_required
+def add_to_watchlist(): ...         # ajoute en DB
 
-static/js/rating.js:
-    async function rateSeries(showId, sentiment) {}
-    function updateRatingUI(showId, sentiment) {}
+@watchlist_bp.route('/a-voir/remove', methods=['POST'])
+@login_required
+def remove_watchlist(): ...         # supprime de la DB
+```
 
-static/js/recommendations.js:
-    async function generateRecommendations() {}
-    function displayRecommendations(data) {}
+### `services/tvmaze.py`
+```python
+def search_shows(query): ...        # appelle l'API TVmaze → liste de dicts
+def get_show_info(show_id): ...     # retourne les détails d'une série
+```
 
-static/js/auth.js:
-    function validateForm() {}
+### `services/gemini.py`
+```python
+def analyze_profile(ratings_list): ...     # → texte profil utilisateur
+def get_recommendations(profile_text): ... # → liste de noms de séries
+```
 
+### `static/js/search.js`
+```javascript
+async function searchShows(query) {}   // fetch GET /api/search?q=query
+function displayResults(shows) {}      // génère les cards dans le DOM
+```
+
+### `static/js/rating.js`
+```javascript
+async function rateSeries(showId, sentiment) {}  // fetch POST /rate
+function updateRatingUI(showId, sentiment) {}    // met à jour les boutons
+```
+
+### `static/js/recommendations.js`
+```javascript
+async function generateRecommendations() {}  // fetch GET /api/recommandations
+function displayRecommendations(data) {}     // affiche profil + séries
+```
+
+### `static/js/auth.js`
+```javascript
+function validateForm() {}  // vérifie les champs login/register
+```
