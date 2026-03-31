@@ -1,5 +1,6 @@
 from extensions import db
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
+from datetime import datetime
 
 ## Tables Users
 class User(db.Model):
@@ -21,6 +22,8 @@ class Regarde(db.Model):
     id_regarde = db.Column(db.Integer, primary_key=True)
     name_serie = db.Column(db.String(80), nullable=False)
     rating_value = db.Column(db.String(80), nullable=False)
+    commentaire  = db.Column(db.Text, nullable=True) 
+    created_at   = db.Column(db.DateTime, default=datetime.utcnow)  # 时间戳的生成 - 逻辑取决于classmethode
     # 这里是点击RegardButton后，存入API的原始ID
     external_id = db.Column(db.String(80))
     #  -- 存入图片的URL
@@ -30,19 +33,35 @@ class Regarde(db.Model):
     user = db.relationship('User', backref="regardes")
 
     @classmethod
-    def get_by_user(cls, user_id):
-        return cls.query.filter_by(id_user=user_id).all()
+    def add_or_update(cls, user_id, external_id, name_serie, image_url, rating_value, commentaire):
+        found = cls.get_one(user_id, external_id)
 
-    # 添加或更新评分
-    @classmethod
-    def add_or_update(cls, user_id, external_id, rating_value):
-        found = cls.query.filter_by(id_user=user_id, external_id=external_id).first()
         if found:
             found.rating_value = rating_value
+            found.commentaire = commentaire
         else:
-            found = cls(id_user=user_id, external_id=external_id, rating_value=rating_value)
+            found = cls(
+                id_user=user_id,
+                external_id=external_id,
+                name_serie=name_serie,
+                image_url=image_url,
+                rating_value=rating_value,
+                commentaire=commentaire
+            )
             db.session.add(found)
+
         db.session.commit()
+
+    @classmethod
+    def get_one(cls, user_id, external_id):
+        return cls.query.filter_by(id_user=user_id, external_id=external_id).first()
+
+    @classmethod
+    def remove(cls, user_id, external_id):
+        found = cls.get_one(user_id, external_id)
+        if found:
+            db.session.delete(found)
+            db.session.commit()
 
 # Tables Avoir
 class Avoir(db.Model):
@@ -61,17 +80,26 @@ class Avoir(db.Model):
     def get_by_user(cls, user_id):
         return cls.query.filter_by(id_user=user_id).all()
 
-    # 添加到 Avoir
     @classmethod
     def add(cls, user_id, external_id, name_serie, image_url):
-        found = cls(id_user=user_id, external_id=external_id, name_serie=name_serie, image_url=image_url)
-        db.session.add(found)
-        db.session.commit()
+        found = cls.get_one(user_id, external_id)
+        if not found:
+            obj = cls(
+                id_user=user_id,
+                external_id=external_id,
+                name_serie=name_serie,
+                image_url=image_url
+            )
+            db.session.add(obj)
+            db.session.commit()
+            
+    @classmethod
+    def get_one(cls, user_id, external_id):
+        return cls.query.filter_by(id_user=user_id, external_id=external_id).first()
 
-    # 从Avoir删除
     @classmethod
     def remove(cls, user_id, external_id):
-        found = cls.query.filter_by(id_user=user_id, external_id=external_id).first()
+        found = cls.get_one(user_id, external_id)
         if found:
             db.session.delete(found)
             db.session.commit()

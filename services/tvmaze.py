@@ -2,7 +2,15 @@ import requests
 TVMAZE_BASE = "https://api.tvmaze.com"
 
 def search_shows(query):
-    response = requests.get(f"{TVMAZE_BASE}/search/shows?q={query}")
+    try:
+        response = requests.get(
+            f"{TVMAZE_BASE}/search/shows",
+            params={"q": query},
+            timeout=8,
+        )
+    except requests.RequestException:
+        return []
+
     if response.status_code != 200:
         return []
     results = response.json()

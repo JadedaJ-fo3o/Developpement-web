@@ -10,9 +10,13 @@ auth_bp = Blueprint('auth', __name__)
 def login_required(f):
     @functools.wraps(f)
     def decorated(*args, **kwargs):
-        if "user_id" not in session:
+        username = session.get("user")
+        if username is None:
             return redirect(url_for('auth.show_auth'))
-        g.user = User.query.get(session["user_id"])  # ← 改这行
+        g.user = User.get_by_username(username)
+        if g.user is None:
+            session.pop("user", None)
+            return redirect(url_for('auth.show_auth'))
         return f(*args, **kwargs)
     return decorated
 
@@ -37,7 +41,7 @@ def register():
     db.session.commit()
 
     # 注册成功 直接登录
-    session["user_id"] = new_user.id_user
+    session["user"] = u
     return {"success": True}, 200
 
 # Log In
@@ -47,18 +51,17 @@ def login():
     u = data.get('user')
     p = data.get('pass')
 
-    # 匹配 Users
     found_user = User.get_by_username(u)
     if not found_user or not found_user.check_password(p):
         return {"error": "Identifiants invalides"}, 401
 
-    session["user_id"] = found_user.id_user  # stock
+    session["user"] = found_user.username
     return {"success": True}, 200
 
 # Log out
 @auth_bp.route('/logout')
 def logout():
-    session.pop('user_id', None)
+    session.pop('user', None)
     return redirect(url_for('auth.show_auth'))
 
 @auth_bp.route('/auth')
