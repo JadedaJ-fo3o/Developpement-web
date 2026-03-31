@@ -53,6 +53,10 @@ class Regarde(db.Model):
         db.session.commit()
 
     @classmethod
+    def get_one(cls, user_id, external_id):
+        return cls.query.filter_by(id_user=user_id, external_id=external_id).first()
+
+    @classmethod
     def remove(cls, user_id, external_id):
         found = cls.get_one(user_id, external_id)
         if found:
@@ -88,6 +92,10 @@ class Avoir(db.Model):
             )
             db.session.add(obj)
             db.session.commit()
+            
+    @classmethod
+    def get_one(cls, user_id, external_id):
+        return cls.query.filter_by(id_user=user_id, external_id=external_id).first()
 
     @classmethod
     def remove(cls, user_id, external_id):
