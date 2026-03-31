@@ -37,10 +37,10 @@ def create_app():
     @app.route('/dashboard')
     def dashboard():
         username = session.get("user", None)
-        if username is not None:
-            return render_template("dashboard.html", user=User.get_by_username(username))
+        if username:
+            user = User.get_by_username(username)
+            return render_template("dashboard.html", user=user)
         return redirect(url_for('home'))
-
     return app
 
 app = create_app()
