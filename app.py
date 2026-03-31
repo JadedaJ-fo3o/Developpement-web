@@ -26,8 +26,12 @@ def create_app():
     def home():
         username = session.get("user", None)
         if username is not None:
-            return render_template("app.html")
+            return render_template("home.html")
         return render_template("auth.html") ## 后续需要改路径
+
+    @app.route('/home-test') ##仅测试用
+    def home_test():
+        return render_template('home.html')
 
     # 个人页面
     @app.route('/dashboard')
