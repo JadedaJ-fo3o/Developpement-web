@@ -1,7 +1,7 @@
 from flask import Flask, render_template, session, redirect, url_for
 from extensions import db
 from routes.auth import auth_bp
-from models import user
+from models import User
 
 def create_app():
     app = Flask(__name__)
@@ -27,14 +27,14 @@ def create_app():
         username = session.get("user", None)
         if username is not None:
             return render_template("app.html")
-        return render_template("auth.html")
+        return render_template("auth.html") ## 后续需要改路径
 
     # 个人页面
     @app.route('/dashboard')
     def dashboard():
         username = session.get("user", None)
         if username is not None:
-            return render_template("dashboard.html", user=user.get_by_username(username))
+            return render_template("dashboard.html", user=User.get_by_username(username))
         return redirect(url_for('home'))
 
     return app

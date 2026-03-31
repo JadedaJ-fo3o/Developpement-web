@@ -6,26 +6,26 @@
 </head>
 <body class="auth-page">
     <div class="main-container">
-        <h1>GEN<span>FLIX</span></h1>
+        <h1 class="auth-h1">GEN<span>FLIX</span></h1>
         
         <div id="form_connect">
-            <h2>Connexion</h2>
-            <form>
-                <input type="text" name="user">
-                <input type="password" name="pass">
-                <button type="submit">Se connecter</button>
+            <h2 class="auth-h2">Connexion</h2>
+            <form class="auth-form">
+                <input class="auth-input" type="text" name="user">
+                <input class="auth-input" type="password" name="pass">
+                <button class="auth-button" type="submit">Se connecter</button>
             </form>
-            <p>Si vous n'avez pas de compte, vous voulez le créer ? <a href="#" onclick="inscrire()">S'inscrire</a></p>
+            <p class="auth-p">Si vous n'avez pas de compte ? <a href="#" onclick="inscrire()">S'inscrire</a></p>
         </div>
 
         <div id="form_inscrire" style="display:none;">
-            <h2>Inscription</h2>
-            <form>
-                <input type="text" name="user">
-                <input type="password" name="pass">
-                <button type="submit">Créer mon compte</button>
+            <h2 class="auth-h2">Inscription</h2>
+            <form class="auth-form">
+                <input class="auth-input" type="text" name="user">
+                <input class="auth-input" type="password" name="pass">
+                <button class="auth-button" type="submit">Créer mon compte</button>
             </form>
-            <p>Vous avez déjà un compte ? <a href="#" onclick="connect()">Se connecter</a></p>
+            <p class="auth-p">Vous avez déjà un compte ? <a href="#" onclick="connect()">Se connecter</a></p>
         </div>
     </div>
 

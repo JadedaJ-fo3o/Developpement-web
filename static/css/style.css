@@ -8,7 +8,6 @@ body {
     background-color: #400000;
     color: white;
     margin: 0;
-    padding: 0;
 }
 
 /* source: https://zhuanlan.zhihu.com/p/536889645 */
@@ -52,7 +51,7 @@ header h3 {
 header nav {
     display: flex;
     gap: 20px;
-    height: 100%;
+    height: 100%
 }
 
 header nav a {
@@ -78,6 +77,12 @@ form {
     display: flex;
     justify-content: center;
     align-items: stretch;
+    gap: 0;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
     gap: 0;
 }
 
@@ -110,8 +115,12 @@ form {
     max-width: 600px;
 }
 
+/* ===== AUTH ===== */
+
 body.auth-page {
-    background: #b20710;
+    background: linear-gradient(-45deg, #4e4e4e, #7c0202, #1a1a1a, #4d0101);
+    background-size: 600% 600%;
+    animation: gradientBG 20s ease infinite;
     height: 100vh;
     justify-content: center;
     align-items: center;
@@ -125,22 +134,22 @@ body.auth-page {
     box-sizing: border-box;
 }
 
-h1 {
+.auth-h1 {
     font-size: 2.5rem;
     margin-bottom: 25px;
     text-align: center;
 }
 
-h1 span {
+.auth-h1 span {
     color: #E50914;
 }
 
-h2 {
+.auth-h2 {
     margin-bottom: 20px;
     font-size: 1.8rem;
 }
 
-input {
+.auth-input {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
@@ -150,9 +159,10 @@ input {
     color: white;
     font-size: 1rem;
     box-sizing: border-box;
+    font-family: STXihei, sans-serif, Monospace;
 }
 
-button {
+.auth-button {
     width: 100%;
     padding: 12px;
     background-color: #E50914;
@@ -162,24 +172,25 @@ button {
     font-size: 1rem;
     cursor: pointer;
     margin-top: 10px;
+    font-family: STXihei, sans-serif, Monospace;
 }
 
-button:hover {
-    background-color: #b20710;
+.auth-button:hover {
+    background-color: #7c0202;
 }
 
-p {
-    color: #737373;
+.auth-p {
+    color: #aaaaaa;
     font-size: 0.9rem;
     margin-top: 25px;
     text-align: center;
 }
 
-a {
+.auth-p a {
     color: white;
     text-decoration: none;
 }
 
-a:hover {
+.auth-p a:hover {
     text-decoration: underline;
 }

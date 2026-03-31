@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, session, url_for, g
 from extensions import db
-from models import user
+from models import User
 from werkzeug.security import generate_password_hash
 import functools
 
@@ -12,7 +12,7 @@ def login_required(f):
     def decorated(*args, **kwargs):
         if "user_id" not in session:
             return redirect(url_for('auth.show_auth'))
-        g.user = user.get_by_username(session["user_id"])
+        g.user = User.query.get(session["user_id"])  # ← 改这行
         return f(*args, **kwargs)
     return decorated
 
@@ -24,12 +24,12 @@ def register():
     p = data.get('pass')
 
     # Check 逻辑
-    user_exists = user.get_by_username(u)
+    user_exists = User.get_by_username(u)
     if user_exists:
         return {"error": "Cet utilisateur existe déjà"}, 400
 
     # HASH 加密 -- PPT
-    new_user = user(
+    new_user = User(
         username=u,
         password_hash=generate_password_hash(p)
     )
@@ -48,11 +48,11 @@ def login():
     p = data.get('pass')
 
     # 匹配 Users
-    user = user.get_by_username(u)
-    if not user or not user.check_password(p):
+    found_user = User.get_by_username(u)
+    if not found_user or not found_user.check_password(p):
         return {"error": "Identifiants invalides"}, 401
 
-    session["user_id"] = user.id_user  # stock
+    session["user_id"] = found_user.id_user  # stock
     return {"success": True}, 200
 
 # Log out
