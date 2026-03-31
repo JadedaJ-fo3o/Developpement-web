@@ -41,7 +41,7 @@ header {
 }
 
 header h3 {
-    font-size: 28px; 
+    font-size: 28px;
     height: 60px;
     line-height: 60px;
     margin: 0;
@@ -73,13 +73,17 @@ main {
     flex-direction: column;
 }
 
-
 form {
     display: flex;
     justify-content: center;
     align-items: stretch;
     gap: 0;
-    
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
 /* 让输入框成为左半边的圆角 */
@@ -101,8 +105,8 @@ form {
 /* 让按钮贴住输入框，成为右半边圆角 */
 #search-button {
     border-radius: 0 999px 999px 0;
-    padding: 0 24px; 
-    background-color:red;
+    padding: 0 24px;
+    background-color: red;
     color: white;
     margin: 50px;
     font-family: STXihei, sans-serif, Monospace;
@@ -230,3 +234,82 @@ div.serie p strong {
     background-color: #333333;
 }
 
+/* ===== AUTH ===== */
+
+body.auth-page {
+    background: linear-gradient(-45deg, #4e4e4e, #7c0202, #1a1a1a, #4d0101);
+    background-size: 600% 600%;
+    animation: gradientBG 20s ease infinite;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-container {
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 60px;
+    width: 380px;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.auth-h1 {
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.auth-h1 span {
+    color: #E50914;
+}
+
+.auth-h2 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: #333;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1rem;
+    box-sizing: border-box;
+    font-family: STXihei, sans-serif, Monospace;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #E50914;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: STXihei, sans-serif, Monospace;
+}
+
+.auth-button:hover {
+    background-color: #7c0202;
+}
+
+.auth-p {
+    color: #aaaaaa;
+    font-size: 0.9rem;
+    margin-top: 25px;
+    text-align: center;
+}
+
+.auth-p a {
+    color: white;
+    text-decoration: none;
+}
+
+.auth-p a:hover {
+    text-decoration: underline;
+}
