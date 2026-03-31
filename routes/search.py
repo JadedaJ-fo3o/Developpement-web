@@ -22,20 +22,3 @@ def api_search():
     return jsonify(shows)
 
 
-@series_bp.route('/add', methods=['POST'])
-@login_required
-def add_series():
-    data = request.get_json()
-
-
-@series_bp.route('/a-voir/add', methods=['POST'])
-@login_required
-def add_to_watchlist():
-    data = request.get_json()
-
-
-
-@series_bp.route('/rate', methods=['POST'])
-@login_required
-def rate():
-    data = request.get_json()
