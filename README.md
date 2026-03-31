@@ -7,7 +7,6 @@ Projet sur le developpement web
 ```
 genflix/
 ├── app.py
-├── config.py
 ├── extensions.py      # ← 初始化 db = SQLAlchemy()
 ├── models.py          # ← user, regarde, avoir 三个类
 ├── routes/
@@ -40,10 +39,6 @@ genflix/
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 ```
-
-### `config.py`
-```python
-
 
 ### `models.py`
 ```python
