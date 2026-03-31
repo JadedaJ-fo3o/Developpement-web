@@ -1,11 +1,16 @@
-<html>
+<!doctype html>
+<html lang="fr">
   <head>
+    <meta charset="utf-8" />
     <title>GRENADE</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
-    <script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
+    <script
+      src="{{ url_for('static', filename='js/search.js') }}"
+      defer
+    ></script>
   </head>
 
   <body class="gradient">
@@ -13,8 +18,10 @@
       <h3 id="home-logo-text">GRENADE</h3>
 
       <nav>
-        <a href="./listeseries.html">Mes séries</a>
-        <a href="./recommendations.html">Recommendations</a>
+        <a href="{{ url_for('listeseries.listeseries_test') }}">Mes séries</a>
+        <a href="{{ url_for('recommendations.recommendation_test') }}"
+          >Recommendations</a
+        >
         <a href="{{ url_for('auth.logout') }}">Déconnexion</a>
       </nav>
     </header>

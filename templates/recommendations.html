@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>GRENADE - Recommendations</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <script
+      src="{{ url_for('static', filename='js/recommendation.js') }}"
+      defer
+    ></script>
+  </head>
+
+  <body class="gradient">
+    <header>
+      <a
+        href="{{ url_for('home') }}"
+        id="home-logo-link"
+        style="text-decoration: none; color: white"
+      >
+        <h3 id="home-logo-text">GRENADE</h3>
+      </a>
+
+      <nav>
+        <a href="{{ url_for('listeseries.listeseries_test') }}">Mes séries</a>
+        <a href="{{ url_for('recommendations.recommendation_test') }}"
+          >Recommendations</a
+        >
+        <a href="{{ url_for('auth.logout') }}">Déconnexion</a>
+      </nav>
+    </header>
+
+    <main id="recommendation-main">
+      <div id="recommendation-center-box">
+        <form id="recommendation-form">
+          <div id="recommendation-input-shell">
+            <textarea
+              id="recommendation-input"
+              placeholder="Décrivez ce que vous voulez regarder..."
+            ></textarea>
+
+            <button
+              type="submit"
+              id="recommendation-submit-button"
+              aria-label="Send"
+            >
+              ↑
+            </button>
+          </div>
+        </form>
+
+        <div id="recommendation-result-container">
+          <!-- résultats -->
+        </div>
+      </div>
+    </main>
+
+    <footer></footer>
+  </body>
+</html>

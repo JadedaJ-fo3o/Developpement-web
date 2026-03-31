@@ -1,14 +1,13 @@
-from flask import Blueprint, request, jsonify, render_template, g
-from models import regarde, avoir
+from flask import Blueprint, request, jsonify, render_template
 from routes.auth import login_required
 from services.tvmaze import search_shows
 
 series_bp = Blueprint('series', __name__)
 
 
-@series_bp.route('/')
+@series_bp.route('/search')
 @login_required
-def home():
+def search_test():
     return render_template('search.html')
 
 
