@@ -82,6 +82,7 @@ form {
     
 }
 
+/* 让输入框成为左半边的圆角 */
 .search-input {
     width: 100%;
     padding: 12px 16px;
@@ -93,9 +94,11 @@ form {
     text-align: center;
     font-family: STXihei, sans-serif, Monospace;
     height: 15px;
+    color: white;
 
 }
 
+/* 让按钮贴住输入框，成为右半边圆角 */
 #search-button {
     border-radius: 0 999px 999px 0;
     padding: 0 24px; 
@@ -107,7 +110,123 @@ form {
     border: none;
 }
 
-.nom_search {
-    flex: 1;
-    max-width: 600px;
+
+div#series-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px 20px;
+    justify-content: center;
 }
+
+/* Serie card */
+div.serie {
+    width: 220px;
+    background-color: #1a1a1a;
+    padding: 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    font-size: smaller;
+}
+
+div.serie a img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+div.serie h3 {
+    font-size: 14px;
+    color: #ffffff;
+    margin: 5px 0;
+}
+
+div.serie p {
+    font-size: 10px;
+    color: #cccccc;
+    text-align: left;
+    width: 100%;
+    margin: 2px 0;
+}
+
+div.serie p strong {
+    color: #ff4444;
+}
+
+.rating-bar-container {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    background-color: #333;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 4px 0;
+}
+
+.rating-bar {
+    height: 100%;
+    background-color: #aa0000;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.rating-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: white;
+    font-weight: bold;
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.action-buttons select {
+    width: 100%;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #444;
+    background-color: #1a0000;
+    color: #ffffff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.action-buttons button {
+    width: 100%;
+    margin: 0;
+    padding: 6px;
+    border-radius: 5px;
+    border: none;
+    font-size: 13px;
+    cursor: pointer;
+    color: white;
+}
+
+.action-buttons button:first-of-type {
+    background-color: #cc0000;
+}
+
+.action-buttons button:first-of-type:hover {
+    background-color: #aa0000;
+}
+
+.action-buttons button:last-of-type {
+    background-color: #444444;
+}
+
+.action-buttons button:last-of-type:hover {
+    background-color: #333333;
+}
+

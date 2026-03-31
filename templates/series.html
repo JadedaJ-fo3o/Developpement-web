@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8" />
-    <title>Exercice 4</title>
+    <title>GENFLIX</title>
     <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
     <script src="{{url_for('static',filename='js/search.js')}}" defer></script>
 </head>
 <body>
+    <div class="gradient">
     <header>
         <h3>GENFLIX</h3>
         <nav>
@@ -14,23 +15,22 @@
             <a href="./watchlist.html">A voir</a>
             <a href="./auth.html">Déconnexion</a>
         </nav>
-
     </header>
     <main>
         <form>
-            <div class="form-row">
-                <div class="input-group">
-                    <input type="text" placeholder="Tape le nom d’une série…" class="search-input"/>                  
+            <div class="form">
+                <div class="input">
+                    <input type="text" id="search-input" placeholder="Tape le nom d'une série…" class="search-input"/>                  
                 </div>
             </div>
-            <button>Afficher</button>
+            <button id="search-button">Rechercher</button>
         </form>
-        <div id="albums" style="margin-top:20px;"></div>
-    <p>Mes séries annotés</p>
-    <div id="plot-container"></div>
+        <p style="margin-left: 50px">Mes séries annotés</p>
+        <div id="series-container"></div>
     </main>
     <footer>
 
     </footer>
+    </div>
 </body>
 
