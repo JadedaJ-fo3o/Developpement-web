@@ -2,9 +2,6 @@
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-
-<html>
-  <head>
     <title>GRENADE</title>
     <link
       rel="stylesheet"
@@ -19,7 +16,9 @@
 
       <nav>
         <a href="{{ url_for('listeseries.listeseries_test') }}">Mes séries</a>
-        <a href="{{ url_for('recommendations.recommendation_test') }}">Recommendations</a>
+        <a href="{{ url_for('recommendations.recommendation_test') }}"
+          >Recommendations</a
+        >
         <a href="{{ url_for('auth.logout') }}">Déconnexion</a>
       </nav>
     </header>
@@ -90,7 +89,4 @@
 
     <footer></footer>
   </body>
-  </head>
-  <body class="auth-page"></body>
-
 </html>
