@@ -2,7 +2,7 @@ from flask import Flask, render_template, session, redirect, url_for
 from extensions import db
 from routes.auth import auth_bp
 from models import User
-
+# test
 def create_app():
     app = Flask(__name__)
 
