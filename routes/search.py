@@ -9,7 +9,7 @@ series_bp = Blueprint('series', __name__)
 @series_bp.route('/')
 @login_required
 def home():
-    return render_template('series.html')
+    return render_template('search.html')
 
 
 @series_bp.route('/api/search')
