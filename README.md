@@ -7,9 +7,8 @@ Projet sur le developpement web
 ```
 genflix/
 ├── app.py
-├── config.py
 ├── extensions.py      # ← 初始化 db = SQLAlchemy()
-├── models.py          # ← User, Rating, Watchlist 三个类
+├── models.py          # ← user, regarde, avoir 三个类
 ├── routes/
 │   ├── auth.py
 │   ├── series.py
@@ -41,48 +40,44 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 ```
 
-### `config.py`
-```python
-SECRET_KEY = "genflix_secret_key"
-SQLALCHEMY_DATABASE_URI = "sqlite:///database.db"
-GEMINI_API_KEY = "ta_clé_gemini_ici"
-```
-
 ### `models.py`
 ```python
 from extensions import db
 
-class User(db.Model):
+class user(db.Model):
     ...
     def check_password(self, password): ...
     @classmethod
     def get_by_username(cls, username): ...
 
-class Rating(db.Model):
+class regarde(db.Model):
     ...
     @classmethod
     def get_by_user(cls, user_id): ...
     @classmethod
-    def add_or_update(cls, user_id, show_id, sentiment): ...
+    def add_or_update(cls, user_id, external_id, rating_value): ...
 
-class Watchlist(db.Model):
+class avoir(db.Model):
     ...
     @classmethod
     def get_by_user(cls, user_id): ...
     @classmethod
-    def add(cls, user_id, show_id, show_name, show_image): ...
+    def add(cls, user_id, external_id, show_name, show_image): ...
     @classmethod
-    def remove(cls, user_id, show_id): ...
+    def remove(cls, user_id, external_id): ...
 ```
 
 ### `app.py`
 ```python
-from flask import Flask
+from flask import Flask,render_template, session, redirect, url_for
 from extensions import db
 from routes.auth import auth_bp
 from routes.series import series_bp
 from routes.recommendations import recommendations_bp
 from routes.watchlist import watchlist_bp
+from models import user
+
+app.config #pas besoin de config.py
 
 def create_app(): ...
 # - app.config.from_object('config')
