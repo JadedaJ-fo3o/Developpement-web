@@ -12,7 +12,11 @@ def login_required(f):
     def decorated(*args, **kwargs):
         if "user_id" not in session:
             return redirect(url_for('auth.show_auth'))
-        g.user = User.query.get(session["user_id"])  # ← 改这行
+        user_id = session.get("user_id")
+        g.user = User.query.get(user_id)
+        if g.user is None:
+            session.pop("user_id", None)
+            return redirect(url_for('auth.show_auth'))
         return f(*args, **kwargs)
     return decorated
 
@@ -58,7 +62,7 @@ def login():
 # Log out
 @auth_bp.route('/logout')
 def logout():
-    session.pop('user_id', None)
+    session.clear()
     return redirect(url_for('auth.show_auth'))
 
 @auth_bp.route('/auth')
