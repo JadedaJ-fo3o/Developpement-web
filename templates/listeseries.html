@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <title>GRENADE</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <script src="{{url_for('static',filename='js/search.js')}}" defer></script>
+</head>
+<body class="gradient">
+    <header>
+        <h3>GRENADE</h3>
+        <form>
+            <div class="form">
+                <div class="input">
+                    <input type="text" id="search-input" placeholder="Tape le nom d'une série…" class="search-input"/>                  
+                </div>
+            </div>
+            <button id="search-button">Rechercher</button>
+        </form>
+        <nav>
+            <a href="./listeseries.html">Mes séries</a>
+            <a href="./recommendations.html">Recommendations</a>
+            <a href="./auth.html">Déconnexion</a>
+        </nav>
+    </header>
+    <main>
+        <p style="margin-left: 50px">Mes séries annotés</p>
+        <div id="series-container"></div>
+    </main>
+    <footer>
+
+    </footer>
+</body>
+
