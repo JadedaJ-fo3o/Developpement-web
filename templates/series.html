@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <title>Exercice 4</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <script src="{{url_for('static',filename='js/search.js')}}" defer></script>
+</head>
+<body>
+    <header>
+        <h3>GENFLIX</h3>
+        <nav>
+            <a href="./series.html">Mes séries</a>
+            <a href="./recommendations.html">Recommendations</a>
+            <a href="./watchlist.html">A voir</a>
+            <a href="./auth.html">Déconnexion</a>
+        </nav>
+
+    </header>
+    <main>
+        <form>
+            <div class="form-row">
+                <div class="input-group">
+                    <input type="text" placeholder="Tape le nom d’une série…" class="search-input"/>                  
+                </div>
+            </div>
+            <button>Afficher</button>
+        </form>
+        <div id="albums" style="margin-top:20px;"></div>
+    <p>Mes séries annotés</p>
+    <div id="plot-container"></div>
+    </main>
+    <footer>
+
+    </footer>
+</body>
+
