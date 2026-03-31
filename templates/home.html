@@ -1,18 +1,10 @@
-<!doctype html>
-<<<<<<< Updated upstream
-<html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-=======
 <html>
   <head>
->>>>>>> Stashed changes
     <title>GRENADE</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
-<<<<<<< Updated upstream
     <script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
   </head>
 
@@ -23,7 +15,7 @@
       <nav>
         <a href="./listeseries.html">Mes séries</a>
         <a href="./recommendations.html">Recommendations</a>
-        <a href="./auth.html">Déconnexion</a>
+        <a href="{{ url_for('auth.logout') }}">Déconnexion</a>
       </nav>
     </header>
 
@@ -93,8 +85,4 @@
 
     <footer></footer>
   </body>
-=======
-  </head>
-  <body class="auth-page"></body>
->>>>>>> Stashed changes
 </html>

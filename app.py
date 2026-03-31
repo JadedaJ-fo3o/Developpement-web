@@ -23,12 +23,13 @@ def create_app():
 
     # 根路由
     @app.route('/')
+    @app.route('/')
     def home():
-        username = session.get("user", None)
-        if username is not None:
+        user_id = session.get("user_id", None)
+        if user_id is not None:
             return render_template("home.html")
-        return render_template("auth.html") ## 后续需要改路径
-
+        return render_template("auth.html")
+   
     @app.route('/home-test') ##仅测试用
     def home_test():
         return render_template('home.html')
@@ -36,11 +37,11 @@ def create_app():
     # 个人页面
     @app.route('/dashboard')
     def dashboard():
-        username = session.get("user", None)
-        if username is not None:
-            return render_template("dashboard.html", user=User.get_by_username(username))
+        user_id = session.get("user_id", None)
+        if user_id:
+            user = User.get_by_id(user_id)  # ⚠️ 这里也要改
+            return render_template("dashboard.html", user=user)
         return redirect(url_for('home'))
-
     return app
 
 app = create_app()

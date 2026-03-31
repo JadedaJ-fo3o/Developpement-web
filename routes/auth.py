@@ -10,9 +10,9 @@ auth_bp = Blueprint('auth', __name__)
 def login_required(f):
     @functools.wraps(f)
     def decorated(*args, **kwargs):
-        if "user_id" not in session:
+        if "user" not in session:
             return redirect(url_for('auth.show_auth'))
-        g.user = User.query.get(session["user_id"])  # ← 改这行
+        g.user = User.get_by_username(session["user_id"])
         return f(*args, **kwargs)
     return decorated
 
