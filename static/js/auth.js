@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (res.ok) {
                 window.location.href = "/";
             } else {
-                alert("Identifiants incorrects");
+                alert("Vos identifiants sont incorrects ou votre compte n'existe pas.");
             }
         });
 
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.href = "/";
             } else {
                 const json = await res.json();
-                alert(json.error || "Erreur lors de l'inscription");
+                alert(json.error || "Vous avez déjà un compte avec ces identifiants.");
             }
         });
 });
