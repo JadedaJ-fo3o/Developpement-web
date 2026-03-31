@@ -1,13 +1,11 @@
-from flask import Flask
-from extensions import db,sess
+from flask import Flask, render_template, session, redirect, url_for
+from extensions import db
 from routes.auth import auth_bp
-from routes.series import series_bp
-from routes.recommendations import recommendations_bp
-from routes.watchlist import watchlist_bp
+from models import user
 
 def create_app():
     app = Flask(__name__)
-    
+
     # 配置数据库
     app.config["SECRET_KEY"] = "genflix_secret_key"
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
@@ -15,18 +13,29 @@ def create_app():
 
     # 初始化数据库
     db.init_app(app)
-    sess.init_app(app)
-
 
     # 自动创建数据库和文件
     with app.app_context():
         db.create_all()
 
-    # Register Blue Print
+    # 注册 Blueprint
     app.register_blueprint(auth_bp)
-    app.register_blueprint(series_bp)
-    app.register_blueprint(recommendations_bp)
-    app.register_blueprint(watchlist_bp)
+
+    # 根路由
+    @app.route('/')
+    def home():
+        username = session.get("user", None)
+        if username is not None:
+            return render_template("app.html")
+        return render_template("auth.html")
+
+    # 个人页面
+    @app.route('/dashboard')
+    def dashboard():
+        username = session.get("user", None)
+        if username is not None:
+            return render_template("dashboard.html", user=user.get_by_username(username))
+        return redirect(url_for('home'))
 
     return app
 
