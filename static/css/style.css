@@ -411,7 +411,7 @@ body.auth-page {
   width: 700px;
   height: 140px;
   border-radius: 32px;
-  background-color: #2a2a2a;
+  background-color: #1a1a1a88;
   box-sizing: border-box;
   padding: 24px 90px 24px 24px;
 }

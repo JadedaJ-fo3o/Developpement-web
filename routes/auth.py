@@ -55,8 +55,6 @@ def login():
     if not found_user or not found_user.check_password(p):
         return {"error": "Identifiants invalides"}, 401
 
-    # 【修改这里】：把 "user_id" 改为 "user"
-    # 并且存入用户名 (found_user.username)，这样 app.py 才能拿到它
     session["user"] = found_user.username
     return {"success": True}, 200
 
