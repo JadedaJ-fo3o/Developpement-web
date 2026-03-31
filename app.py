@@ -1,27 +1,36 @@
-# 只导入了flask
-from flask import Flask, session 
+from flask import Flask
 from extensions import db,sess
-from models import user,regarde,avoir  # 导入数据库中的Tables
+from routes.auth import auth_bp
+from routes.series import series_bp
+from routes.recommendations import recommendations_bp
+from routes.watchlist import watchlist_bp
 
-# Copy TD2
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+    
+    # 配置数据库
+    app.config["SECRET_KEY"] = "genflix_secret_key"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-# 配置数据库
-app.config["SECRET_KEY"] = "dev-secret"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    # 初始化数据库
+    db.init_app(app)
+    sess.init_app(app)
 
-# Sapp.config["SESSION_TYPE"] = "sqlalchemy"
-app.config["SESSION_TYPE"] = "sqlalchemy"
-app.config["SESSION_SQLALCHEMY"] = db
 
-# 初始化 sess 和 db
-db.init_app(app)
-sess.init_app(app)
+    # 自动创建数据库和文件
+    with app.app_context():
+        db.create_all()
 
-# 自动创建数据库和文件
-with app.app_context():
-    db.create_all()
+    # Register Blue Print
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(series_bp)
+    app.register_blueprint(recommendations_bp)
+    app.register_blueprint(watchlist_bp)
+
+    return app
+
+app = create_app()
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(debug=True, port=4000)

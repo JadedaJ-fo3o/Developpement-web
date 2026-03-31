@@ -3,7 +3,6 @@
 <head>
     <title>GenFlix</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 </head>
 <body class="auth-page">
     <div class="main-container">
@@ -11,9 +10,9 @@
         
         <div id="form_connect">
             <h2>Connexion</h2>
-            <form action="{{ url_for('auth.login') }}" method="POST">
-                <input type="text" name="user" >
-                <input type="password" name="pass" >
+            <form>
+                <input type="text" name="user">
+                <input type="password" name="pass">
                 <button type="submit">Se connecter</button>
             </form>
             <p>Si vous n'avez pas de compte, vous voulez le créer ? <a href="#" onclick="inscrire()">S'inscrire</a></p>
@@ -21,13 +20,15 @@
 
         <div id="form_inscrire" style="display:none;">
             <h2>Inscription</h2>
-            <form action="{{ url_for('auth.register') }}" method="POST">
-                <input type="text" name="user" placeholder="Nom d'utilisateur" required>
-                <input type="password" name="pass" placeholder="Mot de passe" required>
+            <form>
+                <input type="text" name="user">
+                <input type="password" name="pass">
                 <button type="submit">Créer mon compte</button>
             </form>
             <p>Vous avez déjà un compte ? <a href="#" onclick="connect()">Se connecter</a></p>
         </div>
     </div>
+
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 </body>
 </html>
