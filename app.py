@@ -37,5 +37,11 @@ def home_test():
     return render_template('home.html')
 
 
+#测试detaille界面用
+@app.route("/detaille")
+def detaille():
+    return render_template("detaille.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=4000)
