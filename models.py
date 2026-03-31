@@ -1,10 +1,20 @@
 from extensions import db
+from werkzeug.security import generate_password_hash, check_password_hash
+
 ## Tables Users
 class user(db.Model):
     id_user = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
+    # 验证密码
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
+    # 通过用户名查找用户
+    @classmethod
+    def get_by_username(cls, username):
+        return cls.query.filter_by(username=username).first()
+    
 # Tables Regarde
 class regarde(db.Model):
     id_regarde = db.Column(db.Integer, primary_key=True)
@@ -18,7 +28,22 @@ class regarde(db.Model):
     id_user = db.Column(db.Integer, db.ForeignKey("user.id_user"), nullable=False)
     user = db.relationship('user', backref="regardes")
 
-# Tables Avoir 
+    @classmethod
+    def get_by_user(cls, user_id):
+        return cls.query.filter_by(id_user=user_id).all()
+
+    # 添加或更新评分
+    @classmethod
+    def add_or_update(cls, user_id, external_id, rating_value):
+        regarde = cls.query.filter_by(id_user=user_id, external_id=external_id).first()
+        if regarde:
+            regarde.rating_value = rating_value
+        else:
+            regarde = cls(id_user=user_id, external_id=external_id, rating_value=rating_value)
+            db.session.add(regarde)
+        db.session.commit()
+
+# Tables Avoir
 class avoir(db.Model):
     id_avoir = db.Column(db.Integer, primary_key=True)
     name_serie = db.Column(db.String(80), nullable=False)
@@ -30,3 +55,22 @@ class avoir(db.Model):
     id_user = db.Column(db.Integer, db.ForeignKey("user.id_user"), nullable=False)
     user = db.relationship('user', backref="avoirs")
 
+    # 通过用户ID获取 Avoir
+    @classmethod
+    def get_by_user(cls, user_id):
+        return cls.query.filter_by(id_user=user_id).all()
+
+    # 添加到 Avoir
+    @classmethod
+    def add(cls, user_id, external_id, name_serie, image_url):
+        avoir = cls(id_user=user_id, external_id=external_id, name_serie=name_serie, image_url=image_url)
+        db.session.add(avoir)
+        db.session.commit()
+
+    # 从Avoir删除
+    @classmethod
+    def remove(cls, user_id, external_id):
+        avoir = cls.query.filter_by(id_user=user_id, external_id=external_id).first()
+        if avoir:
+            db.session.delete(avoir)
+            db.session.commit()
