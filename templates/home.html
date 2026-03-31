@@ -1,0 +1,100 @@
+<!doctype html>
+<<<<<<< Updated upstream
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+=======
+<html>
+  <head>
+>>>>>>> Stashed changes
+    <title>GRENADE</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+<<<<<<< Updated upstream
+    <script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
+  </head>
+
+  <body class="gradient">
+    <header>
+      <h3 id="home-logo-text">GRENADE</h3>
+
+      <nav>
+        <a href="./listeseries.html">Mes séries</a>
+        <a href="./recommendations.html">Recommendations</a>
+        <a href="./auth.html">Déconnexion</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- 搜索框区域：复用现有 search 页面结构 -->
+      <section id="home-search-section">
+        <form id="home-search-form">
+          <div class="form">
+            <div class="input">
+              <input
+                type="text"
+                id="search-input"
+                placeholder="Tape le nom d'une série…"
+                class="search-input"
+              />
+            </div>
+          </div>
+          <button id="search-button">Rechercher</button>
+        </form>
+      </section>
+
+      <!-- 首页主体双栏布局 -->
+      <section id="home-content-layout">
+        <!-- 左列 -->
+        <div id="home-left-column">
+          <section id="today-schedule-block">
+            <div class="block-header">
+              <h2 id="today-schedule-title">Aujourd'hui à l'affiche</h2>
+            </div>
+            <div id="today-schedule-content">
+              <!-- TODO: 今日要播剧目 -->
+            </div>
+          </section>
+
+          <section id="recommendation-block">
+            <div class="block-header">
+              <h2 id="recommendation-title">Recommandations pour vous</h2>
+            </div>
+            <div id="recommendation-content">
+              <!-- TODO: recommendation 内容 -->
+            </div>
+          </section>
+        </div>
+
+        <!-- 右列 -->
+        <div id="home-right-column">
+          <section id="weekly-ranking-block">
+            <div class="block-header">
+              <h2 id="weekly-ranking-title">Classement de la semaine</h2>
+            </div>
+            <div id="weekly-ranking-content">
+              <!-- TODO: 一周口碑榜 -->
+            </div>
+          </section>
+
+          <section id="annual-top10-block">
+            <div class="block-header">
+              <h2 id="annual-top10-title">Top 10 de 2025</h2>
+            </div>
+            <div id="annual-top10-content">
+              <!-- TODO: 2025打分前十榜单 -->
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer></footer>
+  </body>
+=======
+  </head>
+  <body class="auth-page"></body>
+>>>>>>> Stashed changes
+</html>
