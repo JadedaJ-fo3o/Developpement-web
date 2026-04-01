@@ -115,6 +115,7 @@ def build_items(candidates):
 
         items.append(
             {
+                "id": show.get("id"), #pour le lien vers la page de détail
                 "name": show.get("name") or title,
                 "image": show.get("image"),
                 "rating": show.get("rating"),

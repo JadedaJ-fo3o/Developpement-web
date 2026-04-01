@@ -142,6 +142,7 @@ function createRecommendationRow(item) {
   const genres = formatGenres(item.genres);
   const ratingText = formatRating(item.rating);
   const image = item.image || "";
+  const showId = item.id;
   const url = item.url || "#";
 
   const row = document.createElement("tr");
@@ -154,9 +155,13 @@ function createRecommendationRow(item) {
   //image peut être vide
   if (image) {
     const link = document.createElement("a");
-    link.href = url;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
+    if (showId !== null && showId !== undefined && showId !== "") {
+      link.href = `/detail?id=${encodeURIComponent(String(showId))}`;
+    } else {
+      link.href = url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+    }
 
     const img = document.createElement("img");
     img.src = image;
