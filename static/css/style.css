@@ -645,3 +645,33 @@ body.auth-page {
   color: #d5d5d5;
   margin-bottom: 4px;
 }
+
+/* ===== Liste PAGE ===== */
+.listeseries-section{
+  margin-left: 50px;
+  margin-bottom: 30px;
+  background-color: rgba(0, 0, 0, 0.35);
+  border-radius: 12px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.listeseries-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    overflow-x: auto;   /* 横向滚动 */
+    overflow-y: hidden;
+
+    max-height: 500px;  /* 控制高度 */
+    padding: 10px;
+}
+
+
+button.btn-action.modifier{
+  background: #e50914;
+}
+button.btn-action.ajouter{
+  background: #e50914;
+}
+
