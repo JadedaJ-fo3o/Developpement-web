@@ -188,9 +188,9 @@ div.serie p strong {
 }
 
 /* ===== DETAILLE PAGE ===== */
-#detaille-main{
+#detaille-main {
   display: flex;
-  flex-direction: row;;
+  flex-direction: row;
 }
 .information-comment {
   display: flex;
@@ -204,18 +204,18 @@ div.serie p strong {
 }
 
 button#back-button {
-    width: fit-content;
-    margin-top: 20px;
-    margin-left: 20px;
-    border-radius: 6px;
-    border: 0.5px solid rgba(255, 255, 255, 0.25);
-    background: #1a1a1a88;
-    color: inherit;
-    font-size: 13px;
-    font-family: STXihei;
-    padding: 9px 12px;
-    cursor: pointer;
-    text-align: center;
+  width: fit-content;
+  margin-top: 20px;
+  margin-left: 20px;
+  border-radius: 6px;
+  border: 0.5px solid rgba(255, 255, 255, 0.25);
+  background: #1a1a1a88;
+  color: inherit;
+  font-size: 13px;
+  font-family: STXihei;
+  padding: 9px 12px;
+  cursor: pointer;
+  text-align: center;
 }
 .information-container {
   display: flex;
@@ -242,45 +242,45 @@ button#back-button {
 }
 
 .infos-series {
-    padding-left: 20px;
+  padding-left: 20px;
 }
 
-.summary-container p{
+.summary-container p {
   font-style: italic;
 }
-#comment-film{
+#comment-film {
   padding: 20px;
   padding-top: 0;
 }
 
 aside {
-    position: sticky;
-    top: 20px;
-    align-self: flex-start;
+  position: sticky;
+  top: 20px;
+  align-self: flex-start;
 }
 
 #rating-system {
   background: #1a1a1a88;
-    border: 0.5px solid rgba(255, 255, 255);
-    border-radius: 6px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    margin: 20px;
-    margin-top: 55px;
+  border: 0.5px solid rgba(255, 255, 255);
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  margin-top: 55px;
 }
 
 #rating-system textarea {
   width: -webkit-fill-available;
-    height: 90px;
-    resize: none;
-    border-radius: 6px;
-    border: 0.5px solid rgba(255, 255, 255, 0.2);
-    background: rgba(0, 0, 0, 0.3);
-    color: inherit;
-    font-size: 13px;
-    font-family: STXihei;
-    padding: 8px;
+  height: 90px;
+  resize: none;
+  border-radius: 6px;
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.3);
+  color: inherit;
+  font-size: 13px;
+  font-family: STXihei;
+  padding: 8px;
 }
 
 .btn-actions {
@@ -301,45 +301,45 @@ aside {
   text-align: center;
 }
 
-
 /* Source: https://zhuanlan.zhihu.com/p/687187906  https://codepen.io/xingba-coder/pen/oNOxodj */
 .star-rating {
-    display: flex;
-    flex-direction: row;
-    font-size: 30px;
-    justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
+  font-size: 30px;
+  justify-content: flex-start;
 }
 
-.star-rating input{
-  display:none;
+.star-rating input {
+  display: none;
 }
-.star-rating input:checked + label{
-  color:gold;
+.star-rating input:checked + label {
+  color: gold;
 }
 
 /* 点击星级时，点亮当前选择的之前所有的星级 */
-.star-rating:has(input:checked) label:not(input:checked ~ label){
-  color:gold;
+.star-rating:has(input:checked) label:not(input:checked ~ label) {
+  color: gold;
 }
 
-.star-rating label{
-  display:inline-block;
-  width:50px;height:50px;
-  border-radius:50%;
-  color:#ccc;
-  transition:all ease 0.2s;
+.star-rating label {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: #ccc;
+  transition: all ease 0.2s;
 }
-.star-rating label:hover{
-  cursor:pointer;
-  color:gold;
-  & ~ label{
-    color:#ccc!important;
+.star-rating label:hover {
+  cursor: pointer;
+  color: gold;
+  & ~ label {
+    color: #ccc !important;
   }
 }
 
 /* 点亮当前hover之前的所有星级 */
-.star-rating:has(label:hover) label:not(:hover,:hover ~ *){
-  color:gold;
+.star-rating:has(label:hover) label:not(:hover, :hover ~ *) {
+  color: gold;
 }
 
 .commentaire {
@@ -348,7 +348,7 @@ aside {
   gap: 2px;
 }
 
-.commentaire p{
+.commentaire p {
   font-style: italic;
   border-radius: 6px;
   border: 0.5px solid rgba(255, 255, 255, 0.25);
@@ -647,7 +647,7 @@ body.auth-page {
 }
 
 /* ===== Liste PAGE ===== */
-.listeseries-section{
+.listeseries-section {
   margin-left: 50px;
   margin-bottom: 30px;
   background-color: rgba(0, 0, 0, 0.35);
@@ -657,21 +657,19 @@ body.auth-page {
 }
 
 .listeseries-grid {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    overflow-x: auto;   /* 横向滚动 */
-    overflow-y: hidden;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  overflow-x: auto; /* 横向滚动 */
+  overflow-y: hidden;
 
-    max-height: 500px;  /* 控制高度 */
-    padding: 10px;
+  max-height: 500px; /* 控制高度 */
+  padding: 10px;
 }
 
-
-button.btn-action.modifier{
+button.btn-action.modifier {
   background: #e50914;
 }
-button.btn-action.ajouter{
+button.btn-action.ajouter {
   background: #e50914;
 }
-
