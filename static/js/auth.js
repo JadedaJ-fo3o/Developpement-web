@@ -10,7 +10,7 @@ function connect() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // LOGIN  提交监听
+    // LOGIN 监听
     document.getElementById('form_connect').querySelector('form')
         .addEventListener("submit", async (event) => {
             event.preventDefault();
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (res.ok) {
-                window.location.href = "/";
+                window.location.href = "/home";   // 登录成功 → 首页
             } else {
                 alert("Vos identifiants sont incorrects ou votre compte n'existe pas.");
             }
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (res.ok) {
-                window.location.href = "/";
+                window.location.href = "/auth";   // 注册成功 → 登录页
             } else {
                 const json = await res.json();
                 alert(json.error || "Vous avez déjà un compte avec ces identifiants.");
