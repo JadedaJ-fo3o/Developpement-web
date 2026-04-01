@@ -148,6 +148,7 @@ function addAvoir() {
     .then(() => {
         // alert("Ajouté")
         location.reload()
+        window.history.back()
     })
 }
 
@@ -160,6 +161,10 @@ function removeFromAvoir() {
         body: JSON.stringify({
             external_id: showId
         })
+    })
+    .then(() => {
+    // alert("Ajouté")
+    window.history.back()
     })
 }
 
@@ -186,7 +191,11 @@ function initAvoirButton() {
                         body: JSON.stringify({
                             external_id: showId
                         })
-                    }).then(() => location.reload())
+                    })//.then(() => location.reload())
+                    .then(() => {
+                    // alert("Ajouté")
+                    window.history.back()
+                    })
                 }
 
             } else {
@@ -201,7 +210,11 @@ function initAvoirButton() {
                             btn.innerText = 'Supprimer de "à voir"'
 
                             btn.onclick = function () {
-                                removeFromAvoir().then(() => location.reload())
+                                removeFromAvoir()//.then(() => location.reload())
+                                .then(() => {
+                                // alert("Ajouté")
+                                window.history.back()
+                                })
                             }
 
                         } else {
@@ -232,6 +245,7 @@ function loadExistingRating() {
                 document.getElementById("commentaire").value = data.commentaire || ""
             }
         })
+        
 }
 
 
