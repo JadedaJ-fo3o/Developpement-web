@@ -99,6 +99,17 @@ function createHomeRecommendationCard(item) {
     ? Math.max(0, Math.min(100, ratingNumber * 10))
     : 0;
 
+  const ratingContainer = document.createElement("div");
+  ratingContainer.className = "rating-bar-container";
+
+  const ratingBar = document.createElement("div");
+  ratingBar.className = "rating-bar";
+  ratingBar.style.width = `${ratingWidth}%`;
+
+  const ratingLabel = document.createElement("span");
+  ratingLabel.className = "rating-label";
+  ratingLabel.textContent = ratingText;
+
   const reason = item.reason || "";
   const showId = item.id;
 
@@ -130,21 +141,6 @@ function createHomeRecommendationCard(item) {
   title.style.fontSize = "14px";
   card.appendChild(title);
 
-  const ratingContainer = document.createElement("div");
-  ratingContainer.className = "rating-bar-container";
-
-  const ratingBar = document.createElement("div");
-  ratingBar.className = "rating-bar";
-  ratingBar.style.width = `${ratingWidth}%`;
-
-  const ratingLabel = document.createElement("span");
-  ratingLabel.className = "rating-label";
-  ratingLabel.textContent = ratingText;
-
-  ratingContainer.appendChild(ratingBar);
-  ratingContainer.appendChild(ratingLabel);
-  card.appendChild(ratingContainer);
-
   if (reason) {
     const text = document.createElement("p");
     text.textContent = reason;
@@ -153,6 +149,10 @@ function createHomeRecommendationCard(item) {
     text.style.opacity = "0.85";
     card.appendChild(text);
   }
+
+  ratingContainer.appendChild(ratingBar);
+  ratingContainer.appendChild(ratingLabel);
+  card.appendChild(ratingContainer);
 
   return card;
 }
