@@ -51,10 +51,10 @@ document
   });
 
 window.addEventListener("load", function () {
-  const lastSearch = sessionStorage.getItem("histoire");
-  if (!lastSearch) return;
-  document.getElementById("search-input").value = lastSearch;
-  searchShows(lastSearch);
+  const query = document.getElementById("search-input").value.trim();
+    if (!query) return;
+    sessionStorage.setItem("histoire", query);
+    searchShows(query);
 });
 
 document.getElementById("home-page").addEventListener("click", function () {
