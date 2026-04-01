@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    sessionStorage.setItem("histoire", query);
-    window.location.href = "/search";
+    window.location.href = `/search?q=${encodeURIComponent(query)}`;
   });
 });
