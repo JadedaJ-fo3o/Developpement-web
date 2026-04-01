@@ -8,8 +8,9 @@ search_bp = Blueprint('search', __name__)
 
 @search_bp.route('/search')
 @login_required
-def home():
+def search_test():
     return render_template('search.html')
+
 
 @search_bp.route('/api/search')
 @login_required

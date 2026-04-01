@@ -33,28 +33,42 @@
     </header>
 
     <main id="recommendation-main">
-      <div id="recommendation-center-box">
+      <article id="recommendation-center-box">
         <form id="recommendation-form">
           <div id="recommendation-input-shell">
             <textarea
               id="recommendation-input"
               placeholder="Décrivez ce que vous voulez regarder..."
+              required
             ></textarea>
 
             <button
               type="submit"
               id="recommendation-submit-button"
-              aria-label="Send"
+              title="Envoyer la demande de recommandation"
             >
               ↑
             </button>
           </div>
         </form>
 
-        <div id="recommendation-result-container">
-          <!-- résultats -->
+        <!-- Note d'information -->
+        <p id="recommendation-scope-note" class="info-note">
+          Recommandations basées sur TVMaze (séries TV uniquement), avec un
+          maximum de 5 résultats.
+        </p>
+
+        <!-- Conteneur des résultats -->
+        <div id="recommendation-result-container" class="result-box">
+          <!-- Les résultats s'affichent ici -->
         </div>
-      </div>
+
+        <p
+          id="recommendation-error"
+          class="error-message"
+          style="display: none"
+        ></p>
+      </article>
     </main>
 
     <footer></footer>

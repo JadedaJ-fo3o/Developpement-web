@@ -512,8 +512,11 @@ body.auth-page {
 #recommendation-main {
   flex: 1;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
+  padding: 168px 0 40px; /* 推开 header */
+  box-sizing: border-box;
 }
 
 #recommendation-center-box {
@@ -521,6 +524,7 @@ body.auth-page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 24px;
 }
 
 #recommendation-form {
@@ -579,5 +583,65 @@ body.auth-page {
 
 #recommendation-result-container {
   width: 700px;
-  margin-top: 30px;
+  min-height: 1px;
+}
+
+#recommendation-scope-note {
+  width: 700px;
+  margin: 0;
+  color: #d8d8d8;
+  font-size: 14px;
+}
+
+.recommendation-answer {
+  background-color: rgba(0, 0, 0, 0.35);
+  border-radius: 12px;
+  padding: 16px 18px;
+  line-height: 1.6;
+  white-space: normal;
+  margin-bottom: 14px;
+}
+
+.recommendation-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(0, 0, 0, 0.35);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.recommendation-table th,
+.recommendation-table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 14px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.recommendation-table th {
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+.recommendation-show-cell {
+  display: flex;
+  gap: 12px;
+}
+
+.recommendation-show-image {
+  width: 92px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.recommendation-show-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.recommendation-show-sub {
+  font-size: 13px;
+  color: #d5d5d5;
+  margin-bottom: 4px;
 }

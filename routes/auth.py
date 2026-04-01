@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, session, url_for, g
+from flask import Blueprint, render_template, request, redirect, session, url_for, g, jsonify
 from extensions import db
 from models import User
 from werkzeug.security import generate_password_hash
@@ -12,10 +12,14 @@ def login_required(f):
     def decorated(*args, **kwargs):
         username = session.get("user")
         if username is None:
+            if request.path.startswith('/api/'):
+                return jsonify({"error": "Non authentifié"}), 401
             return redirect(url_for('auth.show_auth'))
         g.user = User.get_by_username(username)
         if g.user is None:
             session.pop("user", None)
+            if request.path.startswith('/api/'):
+                return jsonify({"error": "Session invalide"}), 401
             return redirect(url_for('auth.show_auth'))
         return f(*args, **kwargs)
     return decorated
