@@ -42,4 +42,4 @@ def home_test():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=4000)
+    app.run(debug=True, use_reloader=False, port=4000)
