@@ -28,14 +28,15 @@ function renderRegardes(regardes) {
                 <span class="rating-label">${rating}/5</span>
             </div>
 
-            <div class="action-buttons">
-                <button class="btn-modifier">Changer mon avis</button>
-                <button class="btn-supprimer">Supprimer</button>
+            <div class="btn-actions watchliste">
+                <button id="btn-modifier-${show.external_id}" class="btn-action modifier">Changer mon avis</button>
+                <button id="btn-supprimer-${show.external_id}" class="btn-action">Supprimer</button>
             </div>
         `
+        container.appendChild(div)
 
-        const btnModifier = div.querySelector(".btn-modifier")
-        const btnSupprimer = div.querySelector(".btn-supprimer")
+        const btnModifier = div.querySelector( `#btn-modifier-${show.external_id}`)
+        const btnSupprimer = div.querySelector(`#btn-supprimer-${show.external_id}`)
 
         btnModifier.addEventListener("click", function () {
             goDetail(show.external_id)
@@ -45,7 +46,6 @@ function renderRegardes(regardes) {
             await deleteRegarde(show.external_id)
         })
 
-        container.appendChild(div)
     })
 }
 
@@ -63,14 +63,16 @@ function renderAvoirs(avoirs) {
             <img src="${image}" alt="${show.name_serie}">
             <h3>${show.name_serie}</h3>
 
-            <div class="action-buttons">
-                <button class="btn-ajouter-vu">Ajouter comme vu</button>
-                <button class="btn-supprimer">Supprimer</button>
+            <div class="btn-actions avoir">
+                <button id="btn-ajouter-vu-${show.external_id}" class="btn-action ajouter">Ajouter comme vu</button>
+                <button id="btn-supprimer-${show.external_id}"class="btn-action">Supprimer</button>
             </div>
         `
 
-        const btnAjouterVu = div.querySelector(".btn-ajouter-vu")
-        const btnSupprimer = div.querySelector(".btn-supprimer")
+        container.appendChild(div)
+
+        const btnAjouterVu = div.querySelector(`#btn-ajouter-vu-${show.external_id}`)
+        const btnSupprimer = div.querySelector(`#btn-supprimer-${show.external_id}`)
 
         btnAjouterVu.addEventListener("click", function () {
             goDetail(show.external_id)
@@ -80,7 +82,6 @@ function renderAvoirs(avoirs) {
             await deleteAvoir(show.external_id)
         })
 
-        container.appendChild(div)
     })
 }
 

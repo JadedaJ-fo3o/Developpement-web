@@ -551,12 +551,11 @@ body.auth-page {
     padding: 10px;
 }
 
-#stars span {
-    font-size: 30px;
-    cursor: pointer;
-    color: gray;
+
+button.btn-action.modifier{
+  background: #e50914;
+}
+button.btn-action.ajouter{
+  background: #e50914;
 }
 
-#stars span.active {
-    color: gold;
-}

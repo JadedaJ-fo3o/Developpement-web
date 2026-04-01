@@ -1,14 +1,12 @@
-// ===== 1. 取 id =====
-const params = new URLSearchParams(window.location.search)
-const id = params.get("id")
 
+// ===== 1. 取 id =====
 let currentShow = null
 
 
 
 // ===== 2. 加载节目 =====
 function loadShow() {
-    fetch(`https://api.tvmaze.com/shows/${id}`)
+    fetch(`https://api.tvmaze.com/shows/${showId}`)
         .then(res => res.json())
         .then(show => {
             currentShow = show
@@ -55,7 +53,7 @@ function submitRegarde() {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            external_id: id,
+            external_id: showId,
             name_serie: currentShow.name,
             image_url: currentShow.image ? currentShow.image.medium : "",
             rating_value: rating,
@@ -64,8 +62,8 @@ function submitRegarde() {
     })
     .then(() => removeFromAvoir())
     .then(() => {
-        alert("OK")
-        window.location.href = "/"
+        // alert("OK")
+        location.reload()
     })
 }
 
@@ -82,14 +80,14 @@ function addAvoir() {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            external_id: id,
+            external_id: showId,
             name_serie: currentShow.name,
             image_url: currentShow.image ? currentShow.image.medium : ""
         })
     })
     .then(() => {
-        alert("Ajouté")
-        window.location.href = "/"
+        // alert("Ajouté")
+        location.reload()
     })
 }
 
@@ -100,7 +98,7 @@ function removeFromAvoir() {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            external_id: id
+            external_id: showId
         })
     })
 }
@@ -112,28 +110,36 @@ function initAvoirButton() {
     const btn = document.getElementById("btn-avoir")
 
     // 👉 先查 REGARDE
-    fetch(`/api/regarde/get_one?external_id=${id}`)
+    fetch(`/api/regarde/get_one?external_id=${showId}`)
         .then(res => res.json())
         .then(data => {
 
             // ===== 已看过 =====
             if (data && data.external_id) {
 
-                btn.innerText = "Supprimer"
+                btn.innerText = 'Supprimer de "vu"'
+
                 btn.onclick = function () {
-                    removeFromAvoir().then(() => location.reload())
+                    fetch("/api/regarde/delete", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({
+                            external_id: showId
+                        })
+                    }).then(() => location.reload())
                 }
 
             } else {
 
-                // ===== 没看过 → 查 AVOIR =====
-                fetch(`/api/avoir/get_one?external_id=${id}`)
+                // ===== 查 AVOIR =====
+                fetch(`/api/avoir/get_one?external_id=${showId}`)
                     .then(res => res.json())
                     .then(data2 => {
 
                         if (data2 && data2.external_id) {
 
-                            btn.innerText = "Supprimer"
+                            btn.innerText = 'Supprimer de "à voir"'
+
                             btn.onclick = function () {
                                 removeFromAvoir().then(() => location.reload())
                             }
@@ -152,7 +158,7 @@ function initAvoirButton() {
 // ===== 9. 自动填充评分 =====
 function loadExistingRating() {
 
-    fetch(`/api/regarde/get_one?external_id=${id}`)
+    fetch(`/api/regarde/get_one?external_id=${showId}`)
         .then(res => res.json())
         .then(data => {
 

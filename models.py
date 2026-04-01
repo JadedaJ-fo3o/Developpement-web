@@ -39,6 +39,7 @@ class Regarde(db.Model):
         if found:
             found.rating_value = rating_value
             found.commentaire = commentaire
+            found.created_at = datetime.utcnow()
         else:
             found = cls(
                 id_user=user_id,
