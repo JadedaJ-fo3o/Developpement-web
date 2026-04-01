@@ -71,11 +71,12 @@ def _to_item(show, reason=""):
     }
 
 
-def get_top_rated_last_five_years(max_pages=30):
+def get_top_rated_last_five_years(max_pages=200):
     from datetime import datetime
 
     current_year = datetime.utcnow().year
-    years = [current_year - i for i in range(5)]
+    # Use the last 5 completed years to avoid sparse data at the beginning of a new year.
+    years = [current_year - i for i in range(1, 6)]
     best_by_year = {year: None for year in years}
 
     for page in range(max_pages):

@@ -7,6 +7,8 @@ from services.tvmaze import get_recent_running_show, get_top_rated_last_five_yea
 recommendations_bp = Blueprint('recommendations', __name__)
 
 
+
+
 @recommendations_bp.route('/recommendations')
 @login_required
 def recommendation_test():
@@ -16,7 +18,7 @@ def recommendation_test():
 @recommendations_bp.route('/api/recommendations', methods=['POST'])
 @login_required
 def recommendation_api():
-	data = request.get_json() 
+	data = request.get_json(silent=True) or {}
 	user_question = (data.get('question') or '').strip()
 
 	if not user_question:
@@ -40,39 +42,38 @@ def recommendation_api():
 		return jsonify({'items': [], 'message': error_message}), 500 
 
 
-def _fallback_items():
-	return get_top_rated_last_five_years()[:5]
-
-
-
 
 @recommendations_bp.route('/api/home-recommendations', methods=['GET'])
 def home_recommendations_api():
+	fallback_items, fallback_message = _fallback_payload()
+
 	username = session.get("user")
 	if not username:
 		return jsonify({
-			"items": _fallback_items(),
+			"items": fallback_items,
 			"mode": "fallback",
-			"message": "Top séries des cinq dernières années (TVMaze).",
+			"message": fallback_message,
 		}), 200
 
 	user = User.get_by_username(username)
 	if user is None:
 		return jsonify({
-			"items": _fallback_items(),
+			"items": fallback_items,
 			"mode": "fallback",
-			"message": "Top séries des cinq dernières années (TVMaze).",
+			"message": fallback_message,
 		}), 200
 
 	rows = Regarde.query.filter_by(id_user=user.id_user).all()
 	if not rows:
 		return jsonify({
-			"items": _fallback_items(),
+			"items": fallback_items,
 			"mode": "fallback",
-			"message": "Top séries des cinq dernières années (TVMaze).",
+			"message": fallback_message,
 		}), 200
 
 	records = []
+ 
+ 
 	for row in rows:
 		records.append({
 			'name_serie': row.name_serie,
@@ -117,3 +118,65 @@ def _dedupe_items(items):
 		clean.append(item)
 	return clean
 
+
+#local fallback
+DEFAULT_FALLBACK_ITEMS = [
+	{
+		"id": None,
+		"name": "Breaking Bad",
+		"image": None,
+		"rating": 9.5,
+		"url": "https://www.tvmaze.com/shows/169/breaking-bad",
+		"genres": ["Drama", "Crime", "Thriller"],
+		"reason": "Classique fortement noté, apprécié par un large public.",
+	},
+	{
+		"id": None,
+		"name": "Chernobyl",
+		"image": None,
+		"rating": 9.3,
+		"url": "https://www.tvmaze.com/shows/32315/chernobyl",
+		"genres": ["Drama", "History"],
+		"reason": "Mini-série saluée pour son écriture et sa réalisation.",
+	},
+	{
+		"id": None,
+		"name": "Dark",
+		"image": None,
+		"rating": 8.8,
+		"url": "https://www.tvmaze.com/shows/20897/dark",
+		"genres": ["Drama", "Science-Fiction", "Mystery"],
+		"reason": "Intrigue dense et univers marquant.",
+	},
+	{
+		"id": None,
+		"name": "The Last of Us",
+		"image": None,
+		"rating": 8.9,
+		"url": "https://www.tvmaze.com/shows/46562/the-last-of-us",
+		"genres": ["Drama", "Action", "Horror"],
+		"reason": "Série récente avec d'excellents retours critiques.",
+	},
+	{
+		"id": None,
+		"name": "Shogun",
+		"image": None,
+		"rating": 8.7,
+		"url": "https://www.tvmaze.com/shows/61362/shogun",
+		"genres": ["Drama", "History", "Adventure"],
+		"reason": "Production récente, très bien notée et visuellement forte.",
+	},
+]
+
+def _fallback_items():
+	items = get_top_rated_last_five_years()[:5]
+	if items:
+		return items
+	return DEFAULT_FALLBACK_ITEMS[:]
+
+
+def _fallback_payload():
+	items = get_top_rated_last_five_years()[:5]
+	if items:
+		return items, "Top séries des cinq dernières années (TVMaze)."
+	return DEFAULT_FALLBACK_ITEMS[:], "TVMaze indisponible, recommandations locales de secours."
