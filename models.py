@@ -66,7 +66,8 @@ class Regarde(db.Model):
     @classmethod
     def get_by_serie(cls, external_id):
         return cls.query.filter_by(external_id=external_id)\
-            .order_by(Regarde.created_at.desc())
+            .order_by(Regarde.created_at.desc())\
+            .filter(Regarde.commentaire is not None).all()
 
 # Tables Avoir
 class Avoir(db.Model):
@@ -108,3 +109,14 @@ class Avoir(db.Model):
         if found:
             db.session.delete(found)
             db.session.commit()
+
+
+# Tables Top 10
+class Top(db.Model):
+    id_top = db.Column(db.Integer, primary_key=True)
+    external_id = db.Column(db.Integer, nullable=False)   # TVMaze show ID
+    name = db.Column(db.String(255), nullable=False)
+    rating = db.Column(db.Float, nullable=False)
+    image = db.Column(db.String(500), nullable=True)
+    rank = db.Column(db.Integer, nullable=False)          # 1~10
+    year = db.Column(db.Integer, nullable=False)          # e.g. 2025
