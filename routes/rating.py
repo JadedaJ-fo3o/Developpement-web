@@ -14,3 +14,4 @@ def rating_test():
 @login_required
 def detaille_test():
     return render_template('detaille.html')
+

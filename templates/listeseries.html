@@ -3,28 +3,43 @@
     <meta charset="utf-8" />
     <title>GRENADE</title>
     <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
-    <script src="{{url_for('static',filename='js/search.js')}}" defer></script>
+    <script src="{{url_for('static',filename='js/listeseries.js')}}" defer></script>
 </head>
 <body class="gradient">
     <header>
         <h3>GRENADE</h3>
-        <form>
-            <div class="form">
-                <div class="input">
-                    <input type="text" id="search-input" placeholder="Tape le nom d'une série…" class="search-input"/>                  
-                </div>
-            </div>
-            <button id="search-button">Rechercher</button>
-        </form>
         <nav>
-            <a href="./listeseries.html">Mes séries</a>
-            <a href="./recommendations.html">Recommendations</a>
-            <a href="./auth.html">Déconnexion</a>
+            <a class="active-link">Mes séries</a>
+                <style>
+                    .active-link{
+                        color:red;
+                    }
+                    .active-link:hover{
+                        font-weight: normal;
+                    }
+                </style>
+                    <a href="{{ url_for('recommendations.recommendation_test') }}">Recommendations</a>
+                    <a href="{{ url_for('auth.logout') }}">Déconnexion</a>
         </nav>
     </header>
+        <div style="margin-left: 50px">
+            <h1>Bienvenue, {{ session.get("user") }} !</h1>  
+            <p class="subtitle">Voici votre espace personnel pour suivre vos séries et gérer vos préférences.</p>
+        </div>
     <main>
-        <p style="margin-left: 50px">Mes séries annotés</p>
-        <div id="series-container"></div>
+        <!-- 已看过 -->
+        <section class="listeseries-section">
+            <h2>Séries vues</h2>
+            <p id="regarde-empty" class="empty-message">Vous n'avez encore regardé aucune série.</p>
+            <div id="regarde-container" class="listeseries-grid"></div>
+        </section>
+
+        <!-- 想看 -->
+        <section class="listeseries-section">
+            <h2>Séries à voir</h2>
+            <p id="avoir-empty" class="empty-message">Aucune série dans votre liste à voir.</p>
+            <div id="avoir-container" class="listeseries-grid"></div>
+        </section>
     </main>
     <footer>
 
