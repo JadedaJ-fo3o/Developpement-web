@@ -111,6 +111,7 @@ form {
   font-family: STXihei, sans-serif, Monospace;
   height: auto;
   border: none;
+  cursor: pointer;
 }
 
 div#series-container {
@@ -185,51 +186,121 @@ div.serie p strong {
   font-weight: bold;
 }
 
-/* Action buttons */
-.action-buttons {
+/* ===== DETAILLE PAGE ===== */
+#detaille-main{
+  display: flex;
+  flex-direction: row;;
+}
+.information-comment {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  width: 100%;
-  margin-top: 8px;
+}
+.detaille-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
 }
 
-.action-buttons select {
-  width: 100%;
-  padding: 5px;
-  border-radius: 4px;
-  border: 1px solid #444;
-  background-color: #1a0000;
-  color: #ffffff;
+.information-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.poster-container img {
+  border-radius: 6px;
+  height: stretch;
+}
+
+.infos-series {
+    padding-left: 20px;
+}
+
+#comment-film{
+  padding: 20px;
+}
+
+#rating-system {
+  background: #1a1a1a88;
+    border: 0.5px solid rgba(255, 255, 255);
+    border-radius: 6px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 20px;
+    margin-top: 55px;
+}
+
+#rating-system textarea {
+  width: -webkit-fill-available;
+    height: 90px;
+    resize: none;
+    border-radius: 6px;
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+    color: inherit;
+    font-size: 13px;
+    font-family: STXihei;
+    padding: 8px;
+}
+
+.btn-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+}
+.btn-action {
+  border-radius: 6px;
+  border: 0.5px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.07);
+  color: inherit;
   font-size: 13px;
+  font-family: STXihei;
+  padding: 9px 12px;
   cursor: pointer;
+  text-align: center;
 }
 
-.action-buttons button {
-  width: 100%;
-  margin: 0;
-  padding: 6px;
-  border-radius: 5px;
-  border: none;
-  font-size: 13px;
-  cursor: pointer;
-  color: white;
+
+/* Source: https://zhuanlan.zhihu.com/p/687187906  https://codepen.io/xingba-coder/pen/oNOxodj */
+.star-rating {
+    display: flex;
+    flex-direction: row;
+    font-size: 30px;
+    justify-content: flex-start;
 }
 
-.action-buttons button:first-of-type {
-  background-color: #cc0000;
+.star-rating input{
+  display:none;
+}
+.star-rating input:checked + label{
+  color:gold;
 }
 
-.action-buttons button:first-of-type:hover {
-  background-color: #aa0000;
+/* 点击星级时，点亮当前选择的之前所有的星级 */
+.star-rating:has(input:checked) label:not(input:checked ~ label){
+  color:gold;
 }
 
-.action-buttons button:last-of-type {
-  background-color: #444444;
+.star-rating label{
+  display:inline-block;
+  width:50px;height:50px;
+  border-radius:50%;
+  color:#ccc;
+  transition:all ease 0.2s;
+}
+.star-rating label:hover{
+  cursor:pointer;
+  color:gold;
+  & ~ label{
+    color:#ccc!important;
+  }
 }
 
-.action-buttons button:last-of-type:hover {
-  background-color: #333333;
+/* 点亮当前hover之前的所有星级 */
+.star-rating:has(label:hover) label:not(:hover,:hover ~ *){
+  color:gold;
 }
 
 /* ===== AUTH ===== */
