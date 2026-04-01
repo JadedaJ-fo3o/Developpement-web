@@ -1,21 +1,17 @@
 const form = document.querySelector('form')
 const seriesContainer = document.getElementById('series-container')
-
-
-document.getElementById('search-button').addEventListener('click', function(event) {
-    event.preventDefault()
-    const query = document.getElementById('search-input').value.trim()
-    if (!query) return
-
+function searchShows(query) {
     const url = `/api/search?q=${encodeURIComponent(query)}`
     fetch(url)
         .then(response => response.json())
         .then(results => {
             seriesContainer.innerHTML = ''
             results.forEach(show => {
-                const image = show.image ? show.image : ''
                 const rating = show.rating ? show.rating : null
                 const genres = show.genres ? show.genres.join(', ') : '-'
+                const image = show.image 
+                    ? `<img src="${show.image}" width="300">` 
+                    : `<div class="no-poster"></div>`
 
                 const showDiv = document.createElement('div')
                 showDiv.classList.add('serie')
@@ -23,7 +19,7 @@ document.getElementById('search-button').addEventListener('click', function(even
 
                 showDiv.innerHTML = `
                     <a href="${show.url || '#'}" target="_blank">
-                        <img src="${image}" alt="${show.name}">
+                       ${image}
                     </a>
                     <h3>${show.name}</h3>
                     <p><strong>Langue:</strong> ${show.language || '-'}</p>
@@ -43,7 +39,23 @@ document.getElementById('search-button').addEventListener('click', function(even
         .catch(error => {
             console.log("Erreur :", error)
         })
+}
+
+document.getElementById('search-button').addEventListener('click', function(event) {
+    event.preventDefault()
+    const query = document.getElementById('search-input').value.trim()
+    if (!query) return
+    sessionStorage.setItem('histoire', query)
+    searchShows(query) 
 })
 
+window.addEventListener('load', function() {
+    const lastSearch = sessionStorage.getItem('histoire')
+    if (!lastSearch) return
+    document.getElementById('search-input').value = lastSearch
+    searchShows(lastSearch)
+})
 
-
+document.getElementById('home-page').addEventListener('click', function() {
+    window.location.href = '/home-test'
+})
