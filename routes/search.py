@@ -25,7 +25,8 @@ def api_search():
 @login_required
 def detail():
     show_id = request.args.get('id')
-    return render_template('detaille.html', show_id=show_id)
+    comments = Regarde.get_by_serie(str(show_id))
+    return render_template('detaille.html', show_id=show_id, comments=comments)
 
 
 @search_bp.route('/api/detail/<int:show_id>')
@@ -84,19 +85,3 @@ def api_detail(show_id):
     }
     return jsonify(result)
 
-@search_bp.route('/api/detail/<int:show_id>/comment', methods=['GET'])
-@login_required
-def get_comment(show_id):
-    histoire = Regarde.get_by_serie(str(show_id))
-    if histoire is None:
-        return {"error": "History not found"}, 404
-    
-    comments = []
-    for item in histoire:
-        if item.commentaire:
-            comments.append({
-                "commentaire": item.commentaire,
-                "created_at": item.created_at.isoformat()
-            })
-
-    return jsonify(comments)

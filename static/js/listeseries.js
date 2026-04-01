@@ -86,10 +86,8 @@ function renderAvoirs(avoirs) {
 
     })
 }
-
-// 未来要改再说吧...
 function goDetail(id) {
-    window.location.href = "/detaille?id=" + id
+    window.location.href = "/detail?id=" + id
 }
 
 async function deleteRegarde(id) {

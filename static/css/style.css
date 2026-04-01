@@ -342,19 +342,28 @@ aside {
   color: gold;
 }
 
-.commentaire {
+.commentaires-his {
   display: flex;
   flex-direction: column;
   gap: 2px;
-}
-
-.commentaire p {
-  font-style: italic;
+  padding: 8px;
   border-radius: 6px;
   border: 0.5px solid rgba(255, 255, 255, 0.25);
   background: #1a1a1a88;
   text-align: center;
+  padding: 8px;
 }
+
+.commentaires-his p{
+  font-style: italic;
+  
+}
+.commentaires-his .comment-date {
+    font-size: 11px;
+    opacity: 0.6;
+    text-align: right;
+}
+
 /* ===== AUTH ===== */
 
 body.auth-page {
@@ -647,10 +656,11 @@ body.auth-page {
 }
 
 /* ===== Liste PAGE ===== */
-.listeseries-section {
-  margin-left: 50px;
+.listeseries-section{
+  margin: 50px;
+  margin-top: 10px;
   margin-bottom: 30px;
-  background-color: rgba(0, 0, 0, 0.35);
+  background-color: #1a1a1a88;
   border-radius: 12px;
   padding: 20px;
   box-sizing: border-box;
