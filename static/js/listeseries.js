@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", loadWatchlist)
+window.addEventListener("pageshow", function () {
+    loadWatchlist()
+})
 
 async function loadWatchlist() {
     const res = await fetch("/api/watchlist")
