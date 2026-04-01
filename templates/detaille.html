@@ -22,9 +22,12 @@
        <div id="comment-film">
         <h2>Commentaires</h2>
         <div class="commentaire">
+        <div class="commentaires-his">
             {% for c in comments %}
-                <p  value="{{ c }}">{{ c }}</p>
+                <p class="comment-text">{{ c.commentaire }}</p>
+                <span class="comment-date">{{ c.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
             {% endfor %}
+        </div>
         </div>
        </div>
         </div>

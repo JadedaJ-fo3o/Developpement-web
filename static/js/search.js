@@ -41,16 +41,16 @@ function searchShows(query) {
         })
 }
 
-document.getElementById('search-button').addEventListener('click', function(event) {
-    event.preventDefault()
-    const query = document.getElementById('search-input').value.trim()
-    if (!query) return
-    sessionStorage.setItem('histoire', query)
-    searchShows(query) 
-})
+document.getElementById("search-button").addEventListener("click", function (event) {
+    event.preventDefault();
+    const query = document.getElementById("search-input").value.trim();
+    if (!query) return;
+    sessionStorage.setItem("histoire", query);
+    searchShows(query);
+});
 
 window.addEventListener('load', function() {
-    const lastSearch = sessionStorage.getItem('histoire')
+    const lastSearch = document.getElementById("search-input").value.trim();
     if (!lastSearch) return
     document.getElementById('search-input').value = lastSearch
     searchShows(lastSearch)
