@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <title>GRENADE</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <script src="{{url_for('static',filename='js/detaille.js')}}" defer></script>
+</head>
+<body class="gradient">
+    <header>
+        <h3>GRENADE</h3>
+        <nav>
+            <a href="./listeseries.html">Mes séries</a>
+            <a href="./recommendations.html">Recommendations</a>
+            <a href="./auth.html">Déconnexion</a>
+        </nav>
+    </header>
+    <main id="detaille-main">
+        <div class="information-comment">
+       <div id="detaille-film" class="detaille-container"></div>
+       <div id="comment-film">
+        <h2>Commentaires</h2>
+       </div>
+        </div>
+       <aside id="rating-system">
+        <h3>Votre avis</h3>
+        <div>
+        <p style="font-size:12px;opacity:0.5;margin-bottom:6px;">Note</p>
+            <div class="star-rating">
+
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5">★</label>
+
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4">★</label>
+
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3">★</label>
+
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2">★</label>
+
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1">★</label>
+
+            </div>
+        </div>
+
+        <div>
+        <p style="font-size:12px;opacity:0.5;margin-bottom:6px;">Commentaire</p>
+        <textarea placeholder="Votre commentaire…"></textarea>
+        </div>
+
+        <div class="btn-actions">
+        <button class="btn-action watched">Regardé</button>
+        <button class="btn-action wishlist">À voir</button>
+        </div>
+       </aside>
+    </main>
+    <footer>
+
+
+    </footer>
+</body>
+
+
+
+
+
