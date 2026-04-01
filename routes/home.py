@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, jsonify, render_template, request
 from routes.auth import login_required
 from extensions import db
 from models import Top
@@ -16,21 +16,23 @@ def get_weekly_ranking():
         db.session.query(
             Regarde.external_id,
             Regarde.name_serie,
-            func.avg(Regarde.rating_value).label("avg_rating")
+            func.avg(Regarde.rating_value).label("avg_rating"),
+            Regarde.image_url
         )
         #SQL筛选逻辑
         .filter(Regarde.created_at >= one_week_ago)
-        .group_by(Regarde.external_id, Regarde.name_serie)
+        .group_by(Regarde.external_id, Regarde.name_serie, Regarde.image_url)
         .order_by(func.avg(Regarde.rating_value).desc())
         .limit(5)
         .all()
     )
     ranking = []
-    for external_id, name, avg_rating in results:
+    for external_id, name, avg_rating, image_url in results:
         ranking.append({
             "external_id": external_id,
             "name": name,
-            "rating": round(avg_rating, 2)
+            "rating": round(avg_rating, 2),
+            "image_url": image_url
         })
     return ranking
 
@@ -61,7 +63,7 @@ def get_top10_2025():
 # 今日在播
 # 今日播出  - 导入tvmaze捕捉的
 TVMAZE_BASE = "https://api.tvmaze.com"
-def get_today_schedule(offset=0,limit=10): # 这一步是在做切页
+def get_today_schedule(offset, limit):
     today = datetime.now().strftime("%Y-%m-%d")
     url = f"{TVMAZE_BASE}/schedule?date={today}"
     try:
@@ -73,7 +75,7 @@ def get_today_schedule(offset=0,limit=10): # 这一步是在做切页
     data = resp.json()
     sliced = data[offset : offset + limit]
     schedule = []
-    for ep in sliced:  # 取全部
+    for ep in sliced:
         show = ep.get("show", {})
         schedule.append({
             "show_id": show.get("id"),
@@ -84,19 +86,21 @@ def get_today_schedule(offset=0,limit=10): # 这一步是在做切页
         })
     return schedule
 
+@home_bp.route("/api/today-schedule")
+def api_today_schedule():
+    offset = request.args.get("offset", 0, type=int)
+    limit = request.args.get("limit", 5, type=int)
+    data = get_today_schedule(offset=offset, limit=limit)
+    return jsonify(data)
 
 # Recommandation
 
 @home_bp.route("/home")
 @login_required
 def home_page():
-    weekly = get_weekly_ranking()
-    top2025 = get_top10_2025()
-    today_first_page = get_today_schedule(offset=0, limit=10)
-
     return render_template(
         "home.html",
-        today_schedule=today_first_page,
-        weekly_ranking=weekly,
-        top10_2025=top2025
+        today_schedule = get_today_schedule(offset=0, limit=5),
+        weekly_ranking = get_weekly_ranking(),
+        top10_2025=get_top10_2025()
     )

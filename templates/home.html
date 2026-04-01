@@ -51,7 +51,7 @@
               <h2 id="today-schedule-title">Aujourd'hui à l'affiche</h2>
             </div>
             <div id="today-schedule-content">
-              {% for item in today_schedule %}
+              <!-- {% for item in today_schedule %}
                 <div class="today-card">
                   <img src="{{ item.image or url_for('static', filename='img/no-image.png') }}" class="today-img" />
                   <div class="today-info">
@@ -66,7 +66,7 @@
                     </p>
                   </div>
                 </div>
-              {% endfor %}
+              {% endfor %} -->
             </div>
             <button id="today-next">Charger plus</button>
           </section>
@@ -91,6 +91,11 @@
               {% for item in weekly_ranking %}
                 <div class="ranking-item">
                   <div class="ranking-info">
+                    {% if item.image_url %}
+                      <img class="ranking-poster" src="{{ item.image_url }}" alt="{{ item.name }}" />
+                    {% else %}
+                      <div class="no-poster"></div>
+                    {% endif %}
                     <p class="ranking-title">{{ item.name }}</p>
                     <p class="ranking-score">⭐ {{ item.rating }}</p>
                   </div>

@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
+  loadTodaySchedule()
+
   form.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -18,16 +20,15 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-
-  let offset = 10;
-const limit = 10;
+let offset = 0;
+const limit = 5;
 
 const nextBtn = document.getElementById("today-next");
-
 if (nextBtn) {
   nextBtn.addEventListener("click", async () => {
     try {
-      const res = await fetch(`/today?offset=${offset}&limit=${limit}`);
+      offset += limit; // Increment offset for next batch
+      const res = await fetch(`/api/today-schedule?offset=${offset}&limit=${limit}`);
       const data = await res.json();
 
       if (!data || data.length === 0) {
@@ -45,27 +46,43 @@ if (nextBtn) {
   });
 }
 
+function loadTodaySchedule(offset = 0, limit = 5) {
+  fetch(`/api/today-schedule?offset=${offset}&limit=${limit}`)
+    .then(res => res.json())
+    .then(data => appendTodaySchedule(data))
+    .catch(err => console.error("Erreur chargement today-schedule:", err));
+}
 function appendTodaySchedule(items) {
   const container = document.getElementById("today-schedule-content");
   if (!container) return;
-
+  
   items.forEach(item => {
     const card = document.createElement("div");
     card.className = "today-card";
 
-    const image = item.image || "/static/img/no-image.png";
+    // const image = item.image || "/static/img/no-image.png";
+    const imageHTML = item.image
+      ? `<img src="${item.image}" class="today-img" id="poster-${item.show_id}"/>`
+      : `<div class="no-poster" id="poster-${item.show_id}"></div>`
     const episode = item.episode || "Épisode inconnu";
     const airtime = item.airtime ? `À ${item.airtime}` : "Heure inconnue";
 
     card.innerHTML = `
-      <img src="${image}" class="today-img" />
+      ${imageHTML}
       <div class="today-info">
-        <p class="today-name">${item.name}</p>
-        <p class="today-episode">${episode}</p>
-        <p class="today-time">${airtime}</p>
+        <h3 class="today-name">${item.name}</h3>
+        <p class="today-episode"><strong>${episode}</strong></p>
+        <p class="today-time">Horaire: ${airtime}</p>
       </div>
     `;
 
     container.appendChild(card);
+
+    card.style.cursor = "pointer";
+    card.addEventListener("click", function () {
+      window.location.href = "/detail?id=" + item.show_id;
+    });
   });
 }
+
+// document.addEventListener("DOMContentLoaded", loadTodaySchedule);

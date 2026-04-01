@@ -56,5 +56,5 @@ window.addEventListener('load', function() {
 })
 
 document.getElementById("home-page").addEventListener("click", function () {
-  window.location.href = "/home-test";
+  window.location.href = "/home";
 });

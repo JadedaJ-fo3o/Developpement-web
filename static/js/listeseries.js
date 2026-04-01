@@ -42,6 +42,7 @@ function renderRegardes(regardes) {
 
         btnModifier.addEventListener("click", function () {
             goDetail(show.external_id)
+            // 可以直接写成：window.location.href = "/detail?id=" + show.external_id
         })
 
         btnSupprimer.addEventListener("click", async function () {
