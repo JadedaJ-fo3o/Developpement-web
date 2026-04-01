@@ -23,6 +23,7 @@ function renderRegardes(regardes) {
 
         div.innerHTML = `
             <img src="${image}" alt="${show.name_serie}">
+
             <h3>${show.name_serie}</h3>
 
             <div class="rating-bar-container">
@@ -49,6 +50,8 @@ function renderRegardes(regardes) {
         })
 
     })
+
+    updateEmptyMessage("regarde-container", "regarde-empty")
 }
 
 function renderAvoirs(avoirs) {
@@ -63,6 +66,7 @@ function renderAvoirs(avoirs) {
 
         div.innerHTML = `
             <img src="${image}" alt="${show.name_serie}">
+
             <h3>${show.name_serie}</h3>
 
             <div class="btn-actions avoir">
@@ -83,8 +87,21 @@ function renderAvoirs(avoirs) {
         btnSupprimer.addEventListener("click", async function () {
             await deleteAvoir(show.external_id)
         })
+        updateEmptyMessage("avoir-container", "avoir-empty")
 
     })
+}
+
+//空白消息
+function updateEmptyMessage(containerId, messageId) {
+    const container = document.getElementById(containerId)
+    const message = document.getElementById(messageId)
+
+    if (container.children.length === 0) {
+        message.style.display = "null"
+    } else {
+        message.style.display = "none"
+    }
 }
 
 // 未来要改再说吧...
