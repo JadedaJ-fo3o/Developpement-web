@@ -63,6 +63,10 @@ class Regarde(db.Model):
         if found:
             db.session.delete(found)
             db.session.commit()
+    @classmethod
+    def get_by_serie(cls, external_id):
+        return cls.query.filter_by(external_id=external_id)\
+            .order_by(Regarde.created_at.desc())
 
 # Tables Avoir
 class Avoir(db.Model):

@@ -7,21 +7,29 @@
 </head>
 <body class="gradient">
     <header>
-        <h3>GRENADE</h3>
+        <h3 id="home-page">GRENADE</h3>
         <nav>
-            <a href="./listeseries.html">Mes séries</a>
-            <a href="./recommendations.html">Recommendations</a>
-            <a href="./auth.html">Déconnexion</a>
+            <a href="{{ url_for('listeseries.listeseries_test') }}">Mes séries</a>
+            <a href="{{ url_for('recommendations.recommendation_test') }}">Recommendations</a>
+            <a href="{{ url_for('auth.logout') }}">Déconnexion</a>
         </nav>
     </header>
     <main id="detaille-main">
+        
         <div class="information-comment">
+        <button id="back-button"> Revenir en arrière</button>
        <div id="detaille-film" class="detaille-container"></div>
        <div id="comment-film">
         <h2>Commentaires</h2>
+        <div class="commentaire">
+            {% for c in comments %}
+                <p  value="{{ c }}">{{ c }}</p>
+            {% endfor %}
+        </div>
        </div>
         </div>
-       <aside id="rating-system">
+       <aside>
+        <div id="rating-system">
         <h3>Votre avis</h3>
         <div>
         <p style="font-size:12px;opacity:0.5;margin-bottom:6px;">Note</p>
@@ -53,6 +61,7 @@
         <div class="btn-actions">
         <button id="btn-evaluer" class="btn-action watched">Regardé</button>
         <button id="btn-avoir"class="btn-action wishlist">À voir</button>
+        </div>
         </div>
        </aside>
     </main>
