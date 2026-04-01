@@ -200,10 +200,12 @@ div.serie p strong {
   flex-direction: column;
   padding: 20px;
 }
+
 .information-container {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
+
 .poster-container img {
   border-radius: 6px;
   height: stretch;
@@ -248,7 +250,6 @@ div.serie p strong {
   justify-content: space-between;
   gap: 8px;
 }
-
 .btn-action {
   border-radius: 6px;
   border: 0.5px solid rgba(255, 255, 255, 0.25);
@@ -260,6 +261,7 @@ div.serie p strong {
   cursor: pointer;
   text-align: center;
 }
+
 
 /* Source: https://zhuanlan.zhihu.com/p/687187906  https://codepen.io/xingba-coder/pen/oNOxodj */
 .star-rating {

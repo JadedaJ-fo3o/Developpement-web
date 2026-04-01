@@ -1,8 +1,8 @@
 from flask import Flask, render_template, session
 from extensions import db
 from routes.auth import auth_bp
-from routes.recommendations import recommendations_bp
 from routes.search import search_bp
+from routes.recommendations import recommendations_bp
 from routes.listeseries import listeseries_bp
 from routes.rating import rating_bp
 
