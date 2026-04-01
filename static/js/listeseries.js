@@ -22,7 +22,9 @@ function renderRegardes(regardes) {
         div.classList.add("serie")
 
         div.innerHTML = `
-            <img src="${image}" alt="${show.name_serie}">
+            <a href="/detaille?id=${show.external_id}">
+                <img src="${image}" alt="${show.name_serie}">
+            </a>
 
             <h3>${show.name_serie}</h3>
 
@@ -65,8 +67,9 @@ function renderAvoirs(avoirs) {
         div.classList.add("serie")
 
         div.innerHTML = `
-            <img src="${image}" alt="${show.name_serie}">
-
+            <a href="/detaille?id=${show.external_id}">
+                <img src="${image}" alt="${show.name_serie}">
+            </a>
             <h3>${show.name_serie}</h3>
 
             <div class="btn-actions avoir">
