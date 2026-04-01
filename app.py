@@ -1,7 +1,8 @@
-from flask import Flask, render_template, session
+from flask import Flask, redirect, render_template, session, url_for
 from extensions import db
 from routes.auth import auth_bp
 from routes.search import search_bp
+from routes.home import home_bp
 from routes.recommendations import recommendations_bp
 from routes.listeseries import listeseries_bp
 from routes.rating import rating_bp
@@ -26,19 +27,16 @@ app.register_blueprint(search_bp)
 app.register_blueprint(recommendations_bp)
 app.register_blueprint(listeseries_bp)
 app.register_blueprint(rating_bp)
+app.register_blueprint(home_bp)
 
 
 @app.route('/')
 def home():
-    username = session.get("user", None)
-    if username is not None:
-        return render_template("home.html")
     return render_template("auth.html")
 
-
-@app.route('/home-test')
-def home_test():
-    return render_template('home.html')
+# @app.route('/home-test')
+# def home_test():
+#     return render_template('home.html')
 
 
 if __name__ == "__main__":
