@@ -4,16 +4,30 @@ from routes.auth import login_required
 
 listeseries_bp = Blueprint("listeseries", __name__)
 
+
+# ===== 页面 =====
 @listeseries_bp.route('/listeseries')
 @login_required
 def listeseries_test():
     return render_template('listeseries.html')
 
-# 👉 获取 watchlist
-@listeseries_bp.route("/api/watchlist", methods=["GET"])
-def get_watchlist():
+
+# ===== 工具：获取当前用户 =====
+def get_user():
     username = session.get("user")
-    user = User.get_by_username(username)
+    if not username:
+        return None
+    return User.get_by_username(username)
+
+
+# ===== 获取 watchlist =====
+@listeseries_bp.route("/api/watchlist", methods=["GET"])
+@login_required
+def get_watchlist():
+
+    user = get_user()
+    if not user:
+        return {"error": "not logged"}, 401
 
     user_id = user.id_user
 
@@ -40,17 +54,21 @@ def get_watchlist():
     })
 
 
-# 加入 avoir
-@listeseries_bp.route("/api/avoir/add", methods=["POST"])
-def add_avoir():
-    data = request.get_json()
-    username = session.get("user")
-    user = User.get_by_username(username)
+# ===== AVOIR =====
 
-    user_id = user.id_user
+# 👉 加入
+@listeseries_bp.route("/api/avoir/add", methods=["POST"])
+@login_required
+def add_avoir():
+
+    user = get_user()
+    if not user:
+        return {"error": "not logged"}, 401
+
+    data = request.get_json()
 
     Avoir.add(
-        user_id=user_id,
+        user_id=user.id_user,
         external_id=data["external_id"],
         name_serie=data["name_serie"],
         image_url=data["image_url"]
@@ -58,56 +76,59 @@ def add_avoir():
 
     return {"ok": True}
 
-# 删除
+
+# 👉 删除
 @listeseries_bp.route("/api/avoir/delete", methods=["POST"])
+@login_required
 def delete_avoir():
+
+    user = get_user()
+    if not user:
+        return {"error": "not logged"}, 401
+
     data = request.get_json()
-    username = session.get("user")
-    user = User.get_by_username(username)
 
-    user_id = user.id_user
-
-    Avoir.remove(user_id, data["external_id"])
+    Avoir.remove(user.id_user, data["external_id"])
 
     return {"ok": True}
 
 
-# 加入 regarde（= 从 avoir 移过去）
-@listeseries_bp.route("/api/regarde/add", methods=["POST"])
-def add_regarde():
-    data = request.get_json()
-    username = session.get("user")
-    user = User.get_by_username(username)
+# 👉 查询一个（给 detail 用）
+@listeseries_bp.route("/api/avoir/get_one")
+@login_required
+def get_one_avoir():
 
-    user_id = user.id_user
+    user = get_user()
+    if not user:
+        return {"error": "not logged"}, 401
 
-    # 删除 avoir
-    Avoir.remove(user_id, data["external_id"])
+    external_id = request.args.get("external_id")
 
-    # 加入 regarde
-    Regarde.add_or_update(
-        user_id=user_id,
-        external_id=data["external_id"],
-        name_serie=data["name_serie"],
-        image_url=data["image_url"],
-        rating_value=data.get("rating_value", "3"),
-        commentaire=data.get("commentaire", "")
-    )
+    obj = Avoir.get_one(user.id_user, external_id)
 
-    return {"ok": True}
+    if not obj:
+        return {}
+
+    return {
+        "external_id": obj.external_id
+    }
 
 
-# 修改评分 / 评论
+# ===== REGARDE =====
+
+# 👉 添加 / 更新评分
 @listeseries_bp.route("/api/regarde/update", methods=["POST"])
+@login_required
 def update_regarde():
-    data = request.get_json()
-    username = session.get("user")
-    user = User.get_by_username(username)
 
-    user_id = user.id_user
+    user = get_user()
+    if not user:
+        return {"error": "not logged"}, 401
+
+    data = request.get_json()
 
     Regarde.add_or_update(
-        user_id=user_id,
+        user_id=user.id_user,
         external_id=data["external_id"],
         name_serie=data["name_serie"],
         image_url=data["image_url"],
@@ -118,16 +139,40 @@ def update_regarde():
     return {"ok": True}
 
 
-# 删除
+# 👉 删除
 @listeseries_bp.route("/api/regarde/delete", methods=["POST"])
+@login_required
 def delete_regarde():
+
+    user = get_user()
+    if not user:
+        return {"error": "not logged"}, 401
+
     data = request.get_json()
-    username = session.get("user")
-    user = User.get_by_username(username)
 
-    user_id = user.id_user
-
-    Regarde.remove(user_id, data["external_id"])
+    Regarde.remove(user.id_user, data["external_id"])
 
     return {"ok": True}
 
+
+# 👉 查询一个（给 detail 回填）
+@listeseries_bp.route("/api/regarde/get_one")
+@login_required
+def get_one_regarde():
+
+    user = get_user()
+    if not user:
+        return {"error": "not logged"}, 401
+
+    external_id = request.args.get("external_id")
+
+    obj = Regarde.get_one(user.id_user, external_id)
+
+    if not obj:
+        return {}
+
+    return {
+        "external_id": obj.external_id,
+        "rating_value": obj.rating_value,
+        "commentaire": obj.commentaire
+    }

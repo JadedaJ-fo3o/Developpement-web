@@ -21,7 +21,7 @@ class User(db.Model):
 class Regarde(db.Model):
     id_regarde = db.Column(db.Integer, primary_key=True)
     name_serie = db.Column(db.String(80), nullable=False)
-    rating_value = db.Column(db.String(80), nullable=False)
+    rating_value = db.Column(db.Integer,nullable=False)
     commentaire  = db.Column(db.Text, nullable=True) 
     created_at   = db.Column(db.DateTime, default=datetime.utcnow)  # 时间戳的生成 - 逻辑取决于classmethode
     # 这里是点击RegardButton后，存入API的原始ID

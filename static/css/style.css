@@ -479,3 +479,13 @@ body.auth-page {
     max-height: 500px;  /* 控制高度 */
     padding: 10px;
 }
+
+#stars span {
+    font-size: 30px;
+    cursor: pointer;
+    color: gray;
+}
+
+#stars span.active {
+    color: gold;
+}
