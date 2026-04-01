@@ -1,25 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <head>
-    <meta charset="utf-8" />
-    <title>GRENADE</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
-    <script src="{{url_for('static',filename='js/detaille.js')}}" defer></script>
+  <meta charset="utf-8" />
+  <title>GRENADE</title>
+  <link
+    rel="stylesheet"
+    href="{{url_for('static',filename='css/style.css')}}"
+  />
+  <script src="{{url_for('static',filename='js/detaille.js')}}" defer></script>
 </head>
 <body class="gradient">
-    <header>
-        <h3 id="home-page">GRENADE</h3>
-        <nav>
-            <a href="{{ url_for('listeseries.listeseries_test') }}">Mes séries</a>
-            <a href="{{ url_for('recommendations.recommendation_test') }}">Recommendations</a>
-            <a href="{{ url_for('auth.logout') }}">Déconnexion</a>
-        </nav>
-    </header>
-    <main id="detaille-main">
-        
-        <div class="information-comment">
-        <button id="back-button"> Revenir en arrière</button>
-       <div id="detaille-film" class="detaille-container"></div>
-       <div id="comment-film">
+  <header>
+    <a
+      href="{{ url_for('home') }}"
+      id="home-logo-link"
+      style="text-decoration: none; color: white"
+    >
+      <h3 id="home-page">GRENADE</h3>
+    </a>
+    <nav>
+      <a href="{{ url_for('listeseries.listeseries_test') }}">Mes séries</a>
+      <a href="{{ url_for('recommendations.recommendation_test') }}"
+        >Recommendations</a
+      >
+      <a href="{{ url_for('auth.logout') }}">Déconnexion</a>
+    </nav>
+  </header>
+  <main id="detaille-main">
+    <div class="information-comment">
+      <button id="back-button">Revenir en arrière</button>
+      <div id="detaille-film" class="detaille-container"></div>
+      <div id="comment-film">
         <h2>Commentaires</h2>
         <div class="commentaire">
         <div class="commentaires-his">
@@ -35,46 +45,41 @@
         <div id="rating-system">
         <h3>Votre avis</h3>
         <div>
-        <p style="font-size:12px;opacity:0.5;margin-bottom:6px;">Note</p>
-            <div class="star-rating">
-
-            <input type="radio" id="star1" name="rating" value="1">
+          <p style="font-size: 12px; opacity: 0.5; margin-bottom: 6px">Note</p>
+          <div class="star-rating">
+            <input type="radio" id="star1" name="rating" value="1" />
             <label for="star1">★</label>
 
-            <input type="radio" id="star2" name="rating" value="2">
+            <input type="radio" id="star2" name="rating" value="2" />
             <label for="star2">★</label>
 
-            <input type="radio" id="star3" name="rating" value="3">
+            <input type="radio" id="star3" name="rating" value="3" />
             <label for="star3">★</label>
 
-            <input type="radio" id="star4" name="rating" value="4">
+            <input type="radio" id="star4" name="rating" value="4" />
             <label for="star4">★</label>
 
-            <input type="radio" id="star5" name="rating" value="5">
+            <input type="radio" id="star5" name="rating" value="5" />
             <label for="star5">★</label>
-
-            </div>
+          </div>
         </div>
 
         <div>
-        <p style="font-size:12px;opacity:0.5;margin-bottom:6px;">Commentaire</p>
-        <textarea id="commentaire" placeholder="Votre commentaire…"></textarea>
+          <p style="font-size: 12px; opacity: 0.5; margin-bottom: 6px">
+            Commentaire
+          </p>
+          <textarea
+            id="commentaire"
+            placeholder="Votre commentaire…"
+          ></textarea>
         </div>
 
         <div class="btn-actions">
-        <button id="btn-evaluer" class="btn-action watched">Regardé</button>
-        <button id="btn-avoir"class="btn-action wishlist">À voir</button>
+          <button id="btn-evaluer" class="btn-action watched">Regardé</button>
+          <button id="btn-avoir" class="btn-action wishlist">À voir</button>
         </div>
-        </div>
-       </aside>
-    </main>
-    <footer>
-
-
-    </footer>
+      </div>
+    </aside>
+  </main>
+  <footer></footer>
 </body>
-
-
-
-
-
