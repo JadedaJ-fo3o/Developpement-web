@@ -493,13 +493,22 @@ body.auth-page {
     padding: 20px;
 }
 
-#today-schedule-content, 
 #recommendation-content, 
 #annual-top10-content {
     min-height: 220px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+#today-schedule-content {
+    max-height: 430px;
+    max-width: 800px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 #weekly-ranking-content {
@@ -520,6 +529,12 @@ body.auth-page {
     flex-direction: column;
     border-radius: 10px;
     font-size: smaller;
+    flex-shrink: 0;  
+}
+
+p.today-time {
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 img.today-img {
@@ -533,7 +548,8 @@ h3.today-name {
     color: white;
     text-align: left;
     width: 100%;
-    margin: 2px 0;
+    margin-top: 10px;
+    margin-bottom: 0;
 }
 
 p.today-episode{
@@ -550,7 +566,7 @@ p.today-episode{
 
 button#today-next {
     width: fit-content;
-    /* margin-top: 20px; */
+    margin-top: 20px;
     margin-left: 20px;
     border-radius: 6px;
     border: 0.5px solid rgba(255, 255, 255, 0.25);
@@ -563,8 +579,16 @@ button#today-next {
     text-align: center;
 }
 
-.ranking-item {
-    width: auto;
+img.ranking-poster {
+    width: 10%;
+    border-radius: 3px;
+}
+
+
+
+.ranking-item,
+.ranking-item-week {
+    width: stretch;
     margin-bottom: 20px;
     margin-top: 0;
     border-radius: 6px;
@@ -576,6 +600,31 @@ button#today-next {
     padding: 9px 12px;
     cursor: pointer;
     text-align: left;
+    display: flex;
+    flex-direction: row;
+}
+
+.ranking-rating {
+  flex-grow: 1;
+}
+
+.ranking-rating strong{
+  color:#ff4444;
+}
+
+p.ranking-2025 {
+    flex-grow: 1;
+    margin-left: 5px;
+}
+
+.ranking-2025 strong{
+  color:#ff4444;
+}
+
+.ranking-details-2025 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 .block-header {

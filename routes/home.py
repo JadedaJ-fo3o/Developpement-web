@@ -16,23 +16,20 @@ def get_weekly_ranking():
         db.session.query(
             Regarde.external_id,
             Regarde.name_serie,
-            func.avg(Regarde.rating_value).label("avg_rating"),
-            Regarde.image_url
+            func.avg(Regarde.rating_value).label("avg_rating")
         )
-        #SQL筛选逻辑
         .filter(Regarde.created_at >= one_week_ago)
-        .group_by(Regarde.external_id, Regarde.name_serie, Regarde.image_url)
+        .group_by(Regarde.external_id, Regarde.name_serie)
         .order_by(func.avg(Regarde.rating_value).desc())
         .limit(5)
         .all()
     )
     ranking = []
-    for external_id, name, avg_rating, image_url in results:
+    for external_id, name, avg_rating in results:
         ranking.append({
             "external_id": external_id,
             "name": name,
-            "rating": round(avg_rating, 2),
-            "image_url": image_url
+            "rating": round(avg_rating, 2)
         })
     return ranking
 
