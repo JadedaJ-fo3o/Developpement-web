@@ -7,23 +7,23 @@ Projet sur le developpement web
 ```
 genflix/
 ├── app.py
-├── extensions.py      # ← 初始化 db = SQLAlchemy()
-├── models.py          # ← user, regarde, avoir 三个类
+├── extensions.py      # ← Initialisation: db = SQLAlchemy()
+├── models.py          # ← Table => user, regarde, avoir, top
 ├── routes/
 │   ├── auth.py
 │   ├── search.py
 │   ├── recommendations.py
-│   └── listeseries.py   # 已看+待看片单+打分逻辑 => 增加、修改和删除评论
+│   └── listeseries.py   # Liste Regardé + A voir; Logique de notation (Note & Commentaires);
 ├── services/
 │   ├── tvmaze.py
 │   └── gemini.py
 ├── templates/
-│   ├── home.html       # 主页 => 2025年度榜单，本周放送，个性化推荐（Gemini API）
+│   ├── home.html       # Page d'accueil => Classements annuels, publiés aujourd'hui, recommandations personnalisées (que 5 séries)
 │   ├── auth.html
 │   ├── search.html
-│   ├── recommendations.html        # 个性化推荐
-│   ├── listeseries.html        # 已看+待看片单
-|   └── detaille.html       # 电影详情，打分+评价逻辑，展示评论
+│   ├── recommendations.html        # recommandations personnalisées (API Gemini)
+│   ├── listeseries.html        # Liste Regardé + A voir
+|   └── detaille.html       # Détailles du film, Histoire des commentaires
 └── static/
     ├── css/style.css
     └── js/
@@ -31,5 +31,4 @@ genflix/
         ├── search.js
         ├── rating.js
         ├── recommendations.js
-        └── listeseries.js      # 已看+待看片单+打分逻辑 => 增加、修改和删除评论
-```
+        └── listeseries.js      # Liste des vidéos vues + Liste des vidéos à voir + Logique de notation => Ajouter, modifier et supprimer des commentaires
