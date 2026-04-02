@@ -1,10 +1,20 @@
 from flask import Blueprint, g, jsonify, render_template, request, session
+import time
 from models import Regarde, User
 from routes.auth import login_required
 from services.gemini import recommend_from_records
 from services.tvmaze import get_top_rated_last_five_years
 
 recommendations_bp = Blueprint('recommendations', __name__)
+HOME_RECOMMENDATIONS_CACHE = {}
+HOME_RECOMMENDATIONS_TTL_SECONDS = 600
+
+
+def _records_signature(rows):
+	return tuple(
+		(row.name_serie or "", row.rating_value)
+		for row in rows
+	)
 
 
 
@@ -72,8 +82,12 @@ def home_recommendations_api():
 		}), 200
 
 	records = []
- 
- 
+	signature = _records_signature(rows)
+	cache_key = (user.id_user, signature)
+	cache_entry = HOME_RECOMMENDATIONS_CACHE.get(cache_key)
+	if cache_entry and time.time() < cache_entry["expires_at"]:
+		return jsonify(cache_entry["payload"]), 200
+
 	for row in rows:
 		records.append({
 			'name_serie': row.name_serie,
@@ -93,11 +107,16 @@ def home_recommendations_api():
 		items.extend(fallback)
 		items = _dedupe_items(items)
 
-	return jsonify({
+	payload = {
 		"items": items[:5],
 		"mode": "personalized",
 		"message": "5 recommandations personnalisées par Gemini.",
-	}), 200
+	}
+	HOME_RECOMMENDATIONS_CACHE[cache_key] = {
+		"expires_at": time.time() + HOME_RECOMMENDATIONS_TTL_SECONDS,
+		"payload": payload,
+	}
+	return jsonify(payload), 200
 
 #déduplication
 def _dedupe_items(items):

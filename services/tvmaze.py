@@ -8,7 +8,7 @@ def search_shows(query):
         response = requests.get(
             f"{TVMAZE_BASE}/search/shows",
             params={"q": query},
-            timeout=8,
+            timeout=3,
         )
     except requests.RequestException:
         return []
@@ -37,7 +37,7 @@ def search_shows(query):
 
 
 
-def get_top_rated_last_five_years(max_pages=200):
+def get_top_rated_last_five_years(max_pages=30):
     current_year = datetime.now().year
     
     years = []
@@ -53,7 +53,7 @@ def get_top_rated_last_five_years(max_pages=200):
             response = requests.get(
                 f"{TVMAZE_BASE}/shows",
                 params={"page": page}, 
-                timeout=8,
+                timeout=3,
             )
         except requests.RequestException:
             continue
