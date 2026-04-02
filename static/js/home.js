@@ -23,18 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (recommendationContainer) {
     loadHomeRecommendations(recommendationContainer);
   }
-
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
-      items.forEach((item) => {
-        grid.appendChild(createHomeRecommendationCard(item));
-      });
-
-      container.appendChild(grid);
-    })
-    .catch(() => {
-      container.innerHTML = "<p>Impossible de charger les recommandations.</p>";});
-
 });
 
 let offset = 5;

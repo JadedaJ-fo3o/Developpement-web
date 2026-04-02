@@ -17,9 +17,8 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
 with app.app_context():
- ## ！！！非常重要！！
- # 加了一行数据库判断逻辑，判断数据库是否已经存在
-    if not os.path.exists("database.db"):  #如果没有这行会直接新建db覆盖原数据！如果存在数据库，则不会新创建数据库，直接写入。
+    # Verifier si la base de données existe déjà avant de la créer
+    if not os.path.exists("database.db"):  # Si le fichier de base de données n'existe pas, créez-le
         db.create_all()
 
 app.register_blueprint(auth_bp)
@@ -39,7 +38,6 @@ def home():
 # @app.route('/home-test')
 # def home_test():
 #     return render_template('home.html')
-
 
 if __name__ == "__main__":
     app.run(debug=True, use_reloader=False, port=4000)
