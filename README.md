@@ -6,8 +6,6 @@ GRENADE, une plateforme permet à tous d'accéder à l'information et d'échange
 
 Nous avons également conçu une fonction de recommandation basée sur l'IA, qui combine vos notes sur ce site avec les séries tendance en temps réel afin de générer intelligemment de nouvelles recommandations.
 
-Les œuvres télévisuelles sont le reflet de différentes vies, avec leurs rires, leurs colères, leurs avidités, leurs haines et leurs illusions. 
-
 # Structure du projet
 
 ## Architecture des fichiers
