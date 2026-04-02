@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, session, redirect, url_for
 from extensions import db
 from routes.auth import auth_bp
 from routes.search import search_bp
