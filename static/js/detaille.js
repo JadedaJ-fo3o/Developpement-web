@@ -54,9 +54,12 @@ document.getElementById('back-button').addEventListener('click', function() {
     window.history.back()
 })
 
-document.getElementById('home-page').addEventListener('click', function() {
-    window.location.href = '/home-test'
-})
+const homeLink = document.getElementById('home-logo-link')
+if (homeLink) {
+    homeLink.addEventListener('click', function() {
+        window.location.href = '/home-test'
+    })
+}
 
 
 // ===== 1. 取 id =====

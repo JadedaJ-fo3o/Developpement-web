@@ -10,11 +10,8 @@ MAX_RECOMMENDATIONS = 5
 
 
 def build_user_preferences(records):
-    # Construit un petit resume texte de l'historique utilisateur.
     records = records or []
-    aime = []
-    neutre = []
-    deteste = []
+    lines = []
 
     for r in records:
         if not isinstance(r, dict):
@@ -22,33 +19,20 @@ def build_user_preferences(records):
         name = r.get("name_serie")
         if not name:
             continue
-        value = normalize_rating_value(r.get("rating_value"))
-        if value == "aimé":
-            aime.append(name)
-        elif value == "neutre":
-            neutre.append(name)
-        elif value == "n'aime pas":
-            deteste.append(name)
+        score = r.get("rating_value")
+        try:
+            score = int(score)
+        except (TypeError, ValueError):
+            continue
 
-    parts = []
-    if aime:
-        parts.append(f"Aime: {', '.join(aime)}")
-    if neutre:
-        parts.append(f"Neutre: {', '.join(neutre[:3])}")
-    if deteste:
-        parts.append(f"N'aime pas: {', '.join(deteste)}")
-    return " ; ".join(parts)
+        if score < 1 or score > 5: #les notes bizzares
+            continue
 
+        lines.append(f"- {name}: {score}/5")
 
-def normalize_rating_value(value):
-    if value is None:
-        return ""
+    return "\n".join(lines)
 
-    text = str(value).strip()
-    if text in ["aimé", "neutre", "n'aime pas"]:
-        return text
-    return ""
-
+##cette partie doit être corrigée pour mieux refléter
 def detect_intent(question):
     #如果用户问电影，返回movie并引出警告
     # Si l'utilisateur demande un film, on arrete ici (TVMaze = series TV uniquement).
@@ -68,8 +52,9 @@ def build_prompt(pref_text, question):
     return (
         "Donne au maximum 5 recommendations de series TV.\n"
         "Format obligatoire: une ligne par recommandation, comme ceci:\n"
-        "Nom de la serie - raison courte\n\n"
-        f"Préférences utilisateur: {pref_text}\n"
+        "Nom de la serie - raison courte\n"
+        "Les notes utilisateur sont sur 5: 1 = n'aime pas, 5 = aime beaucoup.\n\n"
+        f"Historique et notes utilisateur:\n{pref_text}\n"
         f"Question: {question}\n"
     )
 
