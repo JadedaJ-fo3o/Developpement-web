@@ -28,43 +28,46 @@ document.addEventListener("DOMContentLoaded", function () {
 let offset = 5;
 const limit = 5;
 
-document.getElementById("today-next").addEventListener("click", async function () {
-  try {
-    const res = await fetch(`/api/today-schedule?offset=${offset}&limit=${limit}`);
-    const data = await res.json();
+document
+  .getElementById("today-next")
+  .addEventListener("click", async function () {
+    try {
+      const res = await fetch(
+        `/api/today-schedule?offset=${offset}&limit=${limit}`,
+      );
+      const data = await res.json();
 
-    if (!data || data.length === 0) {
-      this.disabled = true;
-      this.innerText = "Pas plus de programmes disponibles";
-      return;
+      if (!data || data.length === 0) {
+        this.disabled = true;
+        this.innerText = "Pas plus de programmes disponibles";
+        return;
+      }
+
+      appendTodaySchedule(data);
+      offset += limit;
+    } catch (err) {
+      console.error("Erreur:", err);
     }
-
-    appendTodaySchedule(data);
-    offset += limit;
-  } catch (err) {
-    console.error("Erreur:", err);
-  }
-});
-
+  });
 
 // Aujourd'hui à l'affiche
 function loadTodaySchedule(offset, limit) {
   fetch(`/api/today-schedule?offset=${offset}&limit=${limit}`)
-    .then(res => res.json())
-    .then(data => appendTodaySchedule(data))
-    .catch(err => console.error("Erreur chargement today-schedule:", err));
+    .then((res) => res.json())
+    .then((data) => appendTodaySchedule(data))
+    .catch((err) => console.error("Erreur chargement today-schedule:", err));
 }
 function appendTodaySchedule(items) {
   const container = document.getElementById("today-schedule-content");
   if (!container) return;
-  
-  items.forEach(item => {
+
+  items.forEach((item) => {
     const card = document.createElement("div");
     card.className = "today-card";
 
     const imageHTML = item.image
       ? `<img src="${item.image}" class="today-img" id="poster-${item.show_id}"/>`
-      : `<div class="no-poster" id="poster-${item.show_id}"></div>`
+      : `<div class="no-poster" id="poster-${item.show_id}"></div>`;
     const episode = item.episode || "Épisode inconnu";
     const airtime = item.airtime ? `À ${item.airtime}` : "Heure inconnue";
 
@@ -86,17 +89,17 @@ function appendTodaySchedule(items) {
   });
 }
 
-document.querySelectorAll(".ranking-item").forEach(function(card) {
+document.querySelectorAll(".ranking-item").forEach(function (card) {
   // card.style.cursor = "pointer";
-  card.addEventListener("click", function() {
+  card.addEventListener("click", function () {
     const id = this.dataset.id;
     window.location.href = "/detail?id=" + id;
   });
 });
 
-document.querySelectorAll(".ranking-item-week").forEach(function(card) {
+document.querySelectorAll(".ranking-item-week").forEach(function (card) {
   card.style.cursor = "pointer";
-  card.addEventListener("click", function() {
+  card.addEventListener("click", function () {
     const id = this.dataset.id;
     window.location.href = "/detail?id=" + id;
   });
@@ -142,6 +145,7 @@ function loadHomeRecommendations(container) {
       grid.style.display = "grid";
       grid.style.gridTemplateColumns = "repeat(auto-fit, minmax(170px, 1fr))";
       grid.style.gap = "12px";
+      grid.style.width = "100%";
 
       items.forEach((item) => {
         grid.appendChild(createHomeRecommendationCard(item));
@@ -161,6 +165,10 @@ function createHomeRecommendationCard(item) {
   card.style.border = "1px solid rgba(255, 255, 255, 0.2)";
   card.style.borderRadius = "10px";
   card.style.padding = "10px";
+  card.style.display = "flex";
+  card.style.flexDirection = "column";
+  card.style.height = "100%";
+  card.style.boxSizing = "border-box";
 
   const name = item.name || "-";
 
@@ -196,7 +204,7 @@ function createHomeRecommendationCard(item) {
     if (showId !== null && showId !== undefined && showId !== "") {
       link.href = `/detail?id=${encodeURIComponent(String(showId))}`;
     } else {
-      link.href = item.url || "#";
+      link.href = item.url || "#"; // fallback to url(外部) if id is not available
       link.target = "_blank";
       link.rel = "noopener noreferrer";
     }
@@ -205,6 +213,8 @@ function createHomeRecommendationCard(item) {
     img.src = item.image;
     img.alt = name;
     img.style.width = "100%";
+    img.style.height = "250px";
+    img.style.objectFit = "cover";
     img.style.display = "block";
     img.style.borderRadius = "8px";
     img.style.marginBottom = "8px";
@@ -217,6 +227,7 @@ function createHomeRecommendationCard(item) {
   title.textContent = name;
   title.style.margin = "0 0 6px";
   title.style.fontSize = "14px";
+  title.style.minHeight = "40px";
   card.appendChild(title);
 
   if (reason) {
@@ -225,9 +236,12 @@ function createHomeRecommendationCard(item) {
     text.style.margin = "0";
     text.style.fontSize = "12px";
     text.style.opacity = "0.85";
+    text.style.flexGrow = "1";
+    text.style.minHeight = "66px";
     card.appendChild(text);
   }
 
+  ratingContainer.style.marginTop = "auto";
   ratingContainer.appendChild(ratingBar);
   ratingContainer.appendChild(ratingLabel);
   card.appendChild(ratingContainer);
