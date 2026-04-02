@@ -14,12 +14,13 @@ function renderRegardes(regardes) {
     const container = document.getElementById("regarde-container")
     container.innerHTML = ""
 
-    regardes.forEach(show => {
+    regardes.slice().reverse().forEach(function(show) {
+
         const image = show.image_url || ""
         const rating = Number(show.rating_value) || 0
 
         const div = document.createElement("div")
-        div.classList.add("serie")
+        div.className = "serie"
 
         div.innerHTML = `
             <a href="/detaille?id=${show.external_id}">
@@ -38,13 +39,14 @@ function renderRegardes(regardes) {
                 <button id="btn-supprimer-${show.external_id}" class="btn-action">Supprimer</button>
             </div>
         `
+
         container.appendChild(div)
 
-        const btnModifier = div.querySelector( `#btn-modifier-${show.external_id}`)
+        const btnModifier = div.querySelector(`#btn-modifier-${show.external_id}`)
         const btnSupprimer = div.querySelector(`#btn-supprimer-${show.external_id}`)
 
         btnModifier.addEventListener("click", function () {
-            goDetail(show.external_id)
+            window.location.href = "/detail?id=" + show.external_id
         })
 
         btnSupprimer.addEventListener("click", async function () {
@@ -60,21 +62,23 @@ function renderAvoirs(avoirs) {
     const container = document.getElementById("avoir-container")
     container.innerHTML = ""
 
-    avoirs.forEach(show => {
+    avoirs.slice().reverse().forEach(function(show) {
+
         const image = show.image_url || ""
 
         const div = document.createElement("div")
-        div.classList.add("serie")
+        div.className = "serie"
 
         div.innerHTML = `
             <a href="/detaille?id=${show.external_id}">
                 <img src="${image}" alt="${show.name_serie}">
             </a>
+
             <h3>${show.name_serie}</h3>
 
             <div class="btn-actions avoir">
                 <button id="btn-ajouter-vu-${show.external_id}" class="btn-action ajouter">Ajouter comme vu</button>
-                <button id="btn-supprimer-${show.external_id}"class="btn-action">Supprimer</button>
+                <button id="btn-supprimer-${show.external_id}" class="btn-action">Supprimer</button>
             </div>
         `
 
@@ -84,15 +88,16 @@ function renderAvoirs(avoirs) {
         const btnSupprimer = div.querySelector(`#btn-supprimer-${show.external_id}`)
 
         btnAjouterVu.addEventListener("click", function () {
-            goDetail(show.external_id)
+            window.location.href = "/detail?id=" + show.external_id
         })
 
         btnSupprimer.addEventListener("click", async function () {
             await deleteAvoir(show.external_id)
         })
-        updateEmptyMessage("avoir-container", "avoir-empty")
 
     })
+
+    updateEmptyMessage("avoir-container", "avoir-empty")
 }
 
 //空白消息
@@ -105,11 +110,6 @@ function updateEmptyMessage(containerId, messageId) {
     } else {
         message.style.display = "none"
     }
-}
-
-// 未来要改再说吧...
-function goDetail(id) {
-    window.location.href = "/detail?id=" + id
 }
 
 async function deleteRegarde(id) {
