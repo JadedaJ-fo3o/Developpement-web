@@ -1,3 +1,5 @@
+from zoneinfo import ZoneInfo
+
 from extensions import db
 from werkzeug.security import check_password_hash
 from datetime import datetime
@@ -23,7 +25,7 @@ class Regarde(db.Model):
     name_serie = db.Column(db.String(80), nullable=False)
     rating_value = db.Column(db.Integer, nullable=False)
     commentaire  = db.Column(db.Text, nullable=True) 
-    created_at   = db.Column(db.DateTime, default=datetime.utcnow)  # 时间戳的生成 - 逻辑取决于classmethode
+    created_at   = db.Column(db.DateTime, default=datetime.now(ZoneInfo("Europe/Paris")))  # 时间戳的生成 - 逻辑取决于classmethode
     # 这里是点击RegardButton后，存入API的原始ID
     external_id = db.Column(db.String(80))
     #  -- 存入图片的URL
@@ -39,7 +41,7 @@ class Regarde(db.Model):
         if found:
             found.rating_value = rating_value
             found.commentaire = commentaire
-            found.created_at = datetime.utcnow()
+            found.created_at = datetime.now(ZoneInfo("Europe/Paris"))
         else:
             found = cls(
                 id_user=user_id,
