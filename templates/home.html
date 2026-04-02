@@ -24,7 +24,7 @@
     </header>
 
     <main>
-      <!-- 搜索框 -->
+      <!-- Search series avec nom -->
       <section id="home-search-section">
         <form id="home-search-form">
           <div class="form">
@@ -42,32 +42,14 @@
         </form>
       </section>
 
-      <!-- 主体双栏 -->
       <section id="home-content-layout">
-        <!-- 左列：今日在播 + 推荐 -->
+        <!-- PARTIE GAUCHE: Aujourd'hui à l'affiche & Recommandations -->
         <div id="home-left-column">
           <section id="today-schedule-block">
             <div class="block-header">
               <h2 id="today-schedule-title">Aujourd'hui à l'affiche</h2>
             </div>
-            <div id="today-schedule-content">
-              {% for item in today_schedule %}
-                <div class="today-card">
-                  <img src="{{ item.image or url_for('static', filename='img/no-image.png') }}" class="today-img" />
-                  <div class="today-info">
-                    <p class="today-name">{{ item.name }}</p>
-                    <p class="today-episode">{{ item.episode or "Épisode inconnu" }}</p>
-                    <p class="today-time">
-                      {% if item.airtime %}
-                        À {{ item.airtime }}
-                      {% else %}
-                        Heure inconnue
-                      {% endif %}
-                    </p>
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
+            <div id="today-schedule-content"></div>
             <button id="today-next">Charger plus</button>
           </section>
 
@@ -76,24 +58,23 @@
               <h2 id="recommendation-title">Recommandations pour vous</h2>
             </div>
             <div id="recommendation-content">
-              <!-- 之后接入 Gemini 推荐 -->
+              <!-- Recommendation Gemini -->
             </div>
           </section>
         </div>
 
-        <!-- 右列：周榜 + 2025 Top10 -->
+        <!-- PARTIE DROITE: Classement de semaine & 2025 Top 10 -->
         <div id="home-right-column">
           <section id="weekly-ranking-block">
             <div class="block-header">
               <h2 id="weekly-ranking-title">Classement de la semaine</h2>
             </div>
-            <div id="weekly-ranking-content">
-              {% for item in weekly_ranking %}
-                <div class="ranking-item">
-                  <div class="ranking-info">
-                    <p class="ranking-title">{{ item.name }}</p>
-                    <p class="ranking-score">⭐ {{ item.rating }}</p>
-                  </div>
+            <div id="weekly-ranking-content" class="weekly-ranking" > 
+              <!-- 没有external_id -->
+              {% for week_item in weekly_ranking %}
+                <div class="ranking-item-week" data-id="{{ week_item.external_id }}">
+                      <p class="ranking-rating"><strong>{{ week_item.name }}</strong></p>
+                      <p>⭐ {{ week_item.rating }}</p>
                 </div>
               {% endfor %}
             </div>
@@ -105,12 +86,12 @@
             </div>
             <div id="annual-top10-content">
               {% for item in top10_2025 %}
-                <div class="ranking-item">
-                  <div class="ranking-info">
-                    <p class="ranking-title">{{ item.name }}</p>
-                    <p class="ranking-score">⭐ {{ item.rating }}</p>
-                    <p class="ranking-year">2025</p>
-                  </div>
+                <div class="ranking-item" data-id="{{ item.external_id }}">
+                    <p class="ranking-2025"><strong>{{ item.name }}</strong></p>
+                    <div class="ranking-details-2025">
+                    <p class="ranking-2025">⭐ {{ item.rating }}</p>
+                    <p class="ranking-2025">2025</p>
+                    </div>
                 </div>
               {% endfor %}
             </div>
