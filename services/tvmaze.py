@@ -53,7 +53,7 @@ def get_top_rated_last_five_years(max_pages=200):
             response = requests.get(
                 f"{TVMAZE_BASE}/shows",
                 params={"page": page}, 
-                timeout=8,
+                timeout=3,
             )
         except requests.RequestException:
             continue
