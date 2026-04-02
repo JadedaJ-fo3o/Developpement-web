@@ -204,7 +204,7 @@ function createHomeRecommendationCard(item) {
     if (showId !== null && showId !== undefined && showId !== "") {
       link.href = `/detail?id=${encodeURIComponent(String(showId))}`;
     } else {
-      link.href = item.url || "#";
+      link.href = item.url || "#"; // fallback to url(外部) if id is not available
       link.target = "_blank";
       link.rel = "noopener noreferrer";
     }
