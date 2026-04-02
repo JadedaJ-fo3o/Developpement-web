@@ -363,6 +363,7 @@ aside {
   background: #1a1a1a88;
   text-align: center;
   padding: 8px;
+  margin-bottom: 20px;
 }
 
 .commentaires-his p{
@@ -484,8 +485,8 @@ body.auth-page {
 }
 
 /* afficher today */
-#today-schedule-block,
-#recommendation-block, 
+#today-schedule-block, 
+#recommendation-block,
 #weekly-ranking-block, 
 #annual-top10-block {
     background-color: #1a1a1a88;
@@ -493,7 +494,12 @@ body.auth-page {
     padding: 20px;
 }
 
-#recommendation-content, 
+/* #recommendation-content {
+  min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+} */
 #annual-top10-content {
     min-height: 220px;
     display: flex;
@@ -834,19 +840,19 @@ button.btn-action.ajouter {
     cursor: not-allowed;
 }
 
-.listeseries-grid::-webkit-scrollbar {
+::-webkit-scrollbar {
   height: 8px; /* 横向滚动条高度 */
 }
 
-.listeseries-grid::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: transparent; /* 背景 */
 }
 
-.listeseries-grid::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
 }
 
-.listeseries-grid::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.6);
 }
