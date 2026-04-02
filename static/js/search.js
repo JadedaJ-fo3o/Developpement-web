@@ -51,12 +51,12 @@ document
   });
 
 window.addEventListener("load", function () {
-  const query = document.getElementById("search-input").value.trim();
-    if (!query) return;
-    sessionStorage.setItem("histoire", query);
-    searchShows(query);
+  const lastSearch = document.getElementById("search-input").value.trim();
+  if (!lastSearch) return;
+  document.getElementById("search-input").value = lastSearch;
+  searchShows(lastSearch);
 });
 
 document.getElementById("home-page").addEventListener("click", function () {
-  window.location.href = "/home-test";
+  window.location.href = "/home";
 });

@@ -1,9 +1,7 @@
-<<<<<<< Updated upstream
 .env
 
 # Python cache files
 __pycache__/
 *.py[cod]
-=======
+
 instance/database.db
->>>>>>> Stashed changes

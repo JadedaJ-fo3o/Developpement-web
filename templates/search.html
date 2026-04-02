@@ -6,6 +6,22 @@
     rel="stylesheet"
     href="{{url_for('static',filename='css/style.css')}}"
   />
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search); //recuperer "le nom" de la série dans l'URL
+      const q = params.get("q");
+      const decoded = decodeURIComponent(q); //url -> nom
+      //pré-remplir
+      if (q) {
+        document.addEventListener("DOMContentLoaded", function () {
+          const input = document.getElementById("search-input");
+          if (input) {
+            input.value = decoded;
+          }
+        });
+      }
+    })();
+  </script>
   <script src="{{url_for('static',filename='js/search.js')}}" defer></script>
 </head>
 <body class="gradient">

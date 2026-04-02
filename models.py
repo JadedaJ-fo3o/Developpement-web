@@ -66,7 +66,8 @@ class Regarde(db.Model):
     @classmethod
     def get_by_serie(cls, external_id):
         return cls.query.filter_by(external_id=external_id)\
-            .order_by(Regarde.created_at.desc())
+            .order_by(Regarde.created_at.desc())\
+            .filter(Regarde.commentaire is not None).all()
 
 # Tables Avoir
 class Avoir(db.Model):

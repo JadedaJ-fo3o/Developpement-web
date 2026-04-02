@@ -1,23 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <head>
-    <meta charset="utf-8" />
-    <title>GRENADE</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
-    <script src="{{url_for('static',filename='js/listeseries.js')}}" defer></script>
+  <meta charset="utf-8" />
+  <title>GRENADE</title>
+  <link
+    rel="stylesheet"
+    href="{{url_for('static',filename='css/style.css')}}"
+  />
+  <script
+    src="{{url_for('static',filename='js/listeseries.js')}}"
+    defer
+  ></script>
 </head>
 <body class="gradient">
     <header>
-        <h3>GRENADE</h3>
+        <a
+      href="{{ url_for('home') }}"
+      id="home-logo-link"
+      style="text-decoration: none; color: white"
+    >
+      <h3 id="home-page">GRENADE</h3>
+    </a>
         <nav>
             <a class="active-link">Mes séries</a>
-                <style>
+                <!-- <style>
                     .active-link{
                         color:red;
                     }
                     .active-link:hover{
                         font-weight: normal;
                     }
-                </style>
+                </style> -->
                     <a href="{{ url_for('recommendations.recommendation_test') }}">Recommendations</a>
                     <a href="{{ url_for('auth.logout') }}">Déconnexion</a>
         </nav>
@@ -34,15 +46,14 @@
             <div id="regarde-container" class="listeseries-grid"></div>
         </section>
 
-        <!-- 想看 -->
-        <section class="listeseries-section">
-            <h2>Séries à voir</h2>
-            <p id="avoir-empty" class="empty-message">Aucune série dans votre liste à voir.</p>
-            <div id="avoir-container" class="listeseries-grid"></div>
-        </section>
-    </main>
-    <footer>
-
-    </footer>
+    <!-- 想看 -->
+    <section class="listeseries-section">
+      <h2>Séries à voir</h2>
+      <p id="avoir-empty" class="empty-message">
+        Aucune série dans votre liste à voir.
+      </p>
+      <div id="avoir-container" class="listeseries-grid"></div>
+    </section>
+  </main>
+  <footer></footer>
 </body>
-
