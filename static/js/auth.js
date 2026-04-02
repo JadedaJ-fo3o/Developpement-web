@@ -1,51 +1,54 @@
 function inscrire() {
-    document.getElementById('form_connect').style.display = 'none';
-    document.getElementById('form_inscrire').style.display = 'block';
+  document.getElementById("form_connect").style.display = "none";
+  document.getElementById("form_inscrire").style.display = "block";
 }
 
 function connect() {
-    document.getElementById('form_connect').style.display = 'block';
-    document.getElementById('form_inscrire').style.display = 'none';
+  document.getElementById("form_connect").style.display = "block";
+  document.getElementById("form_inscrire").style.display = "none";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // LOGIN 监听
+  document
+    .getElementById("form_connect")
+    .querySelector("form")
+    .addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(event.target));
 
-    // LOGIN 监听
-    document.getElementById('form_connect').querySelector('form')
-        .addEventListener("submit", async (event) => {
-            event.preventDefault();
-            const data = Object.fromEntries(new FormData(event.target));
+      const res = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-            const res = await fetch("/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            });
+      if (res.ok) {
+        window.location.href = "/home"; // 登录成功 → 首页
+      } else {
+        alert("Vos identifiants sont incorrects ou votre compte n'existe pas.");
+      }
+    });
 
-            if (res.ok) {
-                window.location.href = "/home";   // 登录成功 → 首页
-            } else {
-                alert("Vos identifiants sont incorrects ou votre compte n'existe pas.");
-            }
-        });
+  // REGISTER 监听
+  document
+    .getElementById("form_inscrire")
+    .querySelector("form")
+    .addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(event.target));
 
-    // REGISTER 监听
-    document.getElementById('form_inscrire').querySelector('form')
-        .addEventListener("submit", async (event) => {
-            event.preventDefault();
-            const data = Object.fromEntries(new FormData(event.target));
+      const res = await fetch("/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-            const res = await fetch("/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            });
-
-            if (res.ok) {
-                window.location.href = "/auth";   // 注册成功 → 登录页
-            } else {
-                const json = await res.json();
-                alert(json.error || "Vous avez déjà un compte avec ces identifiants.");
-            }
-        });
+      if (res.ok) {
+        window.location.href = "/auth"; // 注册成功 → 登录页
+      } else {
+        const json = await res.json();
+        alert(json.error || "Vous avez déjà un compte avec ces identifiants.");
+      }
+    });
 });

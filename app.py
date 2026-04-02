@@ -32,7 +32,9 @@ app.register_blueprint(home_bp)
 
 @app.route('/')
 def home():
-    return render_template("auth.html")
+    if session.get("user"):
+        return redirect(url_for("home.home_page"))
+    return redirect(url_for("auth.show_auth"))
 
 # @app.route('/home-test')
 # def home_test():

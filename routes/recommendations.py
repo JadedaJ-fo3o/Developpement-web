@@ -2,7 +2,7 @@ from flask import Blueprint, g, jsonify, render_template, request, session
 from models import Regarde, User
 from routes.auth import login_required
 from services.gemini import recommend_from_records
-from services.tvmaze import get_recent_running_show, get_top_rated_last_five_years
+from services.tvmaze import get_top_rated_last_five_years
 
 recommendations_bp = Blueprint('recommendations', __name__)
 
@@ -81,15 +81,10 @@ def home_recommendations_api():
 		})
 
 	try:
-		result = recommend_from_records(records, "Propose 4 séries TV adaptées à mes goûts.")##add prompt
-		items = list(result.get("items") or [])[:4]
+		result = recommend_from_records(records, "Propose 5 séries TV adaptées à mes goûts.")
+		items = list(result.get("items") or [])[:5]
 	except Exception:
 		items = []
-
-	exclude_ids = [item.get("id") for item in items if item.get("id") is not None]
-	recent = get_recent_running_show(exclude_ids=exclude_ids)
-	if recent:
-		items.append(recent)
 
 	items = _dedupe_items(items) #déduplication - la série
 
@@ -101,7 +96,7 @@ def home_recommendations_api():
 	return jsonify({
 		"items": items[:5],
 		"mode": "personalized",
-		"message": "4 recommandations personnalisées + 1 série récente en cours.",
+		"message": "5 recommandations personnalisées par Gemini.",
 	}), 200
 
 #déduplication
