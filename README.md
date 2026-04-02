@@ -1,5 +1,5 @@
 # GRENADE 
-*** Même dans les moments les plus sombres, l'écran continue de briller. ***
+Même dans les moments les plus sombres, l'écran continue de briller.
 
 ## Introduction
 GRENADE, une plateforme permet à tous d'accéder à l'information et d'échanger des idées. Vous pouvez y consulter la programmation des séries du jour, la liste des séries populaires de la semaine, et rechercher des informations sur des œuvres spécifiques. Vous pouvez également enregistrer les programmes que vous avez vus et ceux à venir, et les noter et les commenter. Bien sûr, vous pouvez aussi lire les commentaires des autres utilisateurs.
