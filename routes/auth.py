@@ -28,8 +28,8 @@ def login_required(f):
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-    u = data.get("username", "").strip()
-    p = data.get("password", "").strip()
+    u = data.get("user", "").strip()
+    p = data.get("pass", "").strip()
     
     if not u:
         return{"error":"Le nom d'utilisateur est requis"},400
@@ -57,8 +57,8 @@ def register():
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    u = data.get("username", "").strip()
-    p = data.get("password", "").strip()
+    u = data.get("user", "").strip()
+    p = data.get("pass", "").strip()
     
     if not u:
         return{"error":"Le nom d'utilisateur est requis"},400
