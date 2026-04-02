@@ -42,8 +42,8 @@ function renderRegardes(regardes) {
 
         container.appendChild(div)
 
-        const btnModifier = div.querySelector("#btn-modifier-" + show.external_id)
-        const btnSupprimer = div.querySelector("#btn-supprimer-" + show.external_id)
+        const btnModifier = div.querySelector(`#btn-modifier-${show.external_id}`)
+        const btnSupprimer = div.querySelector(`#btn-supprimer-${show.external_id}`)
 
         btnModifier.addEventListener("click", function () {
             window.location.href = "/detail?id=" + show.external_id
@@ -84,8 +84,8 @@ function renderAvoirs(avoirs) {
 
         container.appendChild(div)
 
-        const btnAjouterVu = div.querySelector("#btn-ajouter-vu-" + show.external_id)
-        const btnSupprimer = div.querySelector("#btn-supprimer-" + show.external_id)
+        const btnAjouterVu = div.querySelector(`#btn-ajouter-vu-${show.external_id}`)
+        const btnSupprimer = div.querySelector(`#btn-supprimer-${show.external_id}`)
 
         btnAjouterVu.addEventListener("click", function () {
             window.location.href = "/detail?id=" + show.external_id
