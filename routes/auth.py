@@ -28,8 +28,13 @@ def login_required(f):
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-    u = data.get('user')
-    p = data.get('pass')
+    u = data.get("username", "").strip()
+    p = data.get("password", "").strip()
+    
+    if not u:
+        return{"error":"Le nom d'utilisateur est requis"},400
+    if not p:
+        return{"error":"Le mot de passe est requis"},400
 
     # Check 逻辑
     user_exists = User.get_by_username(u)
@@ -52,8 +57,13 @@ def register():
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    u = data.get('user')
-    p = data.get('pass')
+    u = data.get("username", "").strip()
+    p = data.get("password", "").strip()
+    
+    if not u:
+        return{"error":"Le nom d'utilisateur est requis"},400
+    if not p:
+        return{"error":"Le mot de passe est requis"},400
 
     found_user = User.get_by_username(u)
     if not found_user or not found_user.check_password(p):
