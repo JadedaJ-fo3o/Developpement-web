@@ -815,6 +815,11 @@ p.ranking-2025 {
   padding: 10px;
 }
 
+.listeseries-grid .serie {
+  min-width: 220px;
+  flex-shrink: 0;   /* 横向滚动关键 */
+}
+
 button.btn-action.modifier {
   background: #e50914;
 }
@@ -827,4 +832,21 @@ button.btn-action.ajouter {
     color: white;
     opacity: 0.7;
     cursor: not-allowed;
+}
+
+.listeseries-grid::-webkit-scrollbar {
+  height: 8px; /* 横向滚动条高度 */
+}
+
+.listeseries-grid::-webkit-scrollbar-track {
+  background: transparent; /* 背景 */
+}
+
+.listeseries-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.listeseries-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.6);
 }
