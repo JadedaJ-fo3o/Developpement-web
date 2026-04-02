@@ -1,7 +1,14 @@
-# Developpement-web
-Projet sur le developpement web
+# GRENADE 
+*** Même dans les moments les plus sombres, l'écran continue de briller. ***
 
-# GenFlix — Structure du projet
+## Introduction
+GRENADE, une plateforme permet à tous d'accéder à l'information et d'échanger des idées. Vous pouvez y consulter la programmation des séries du jour, la liste des séries populaires de la semaine, et rechercher des informations sur des œuvres spécifiques. Vous pouvez également enregistrer les programmes que vous avez vus et ceux à venir, et les noter et les commenter. Bien sûr, vous pouvez aussi lire les commentaires des autres utilisateurs.
+
+Nous avons également conçu une fonction de recommandation basée sur l'IA, qui combine vos notes sur ce site avec les séries tendance en temps réel afin de générer intelligemment de nouvelles recommandations.
+
+Les œuvres télévisuelles sont le reflet de différentes vies, avec leurs rires, leurs colères, leurs avidités, leurs haines et leurs illusions. 
+
+# Structure du projet
 
 ## Architecture des fichiers
 ```
@@ -32,3 +39,12 @@ genflix/
         ├── rating.js
         ├── recommendations.js
         └── listeseries.js      # Liste des vidéos vues + Liste des vidéos à voir + Logique de notation => Ajouter, modifier et supprimer des commentaires
+```
+
+## Guide d'installation
+
+Pour utiliser l'API, vous devez créer un fichier `.env` :
+```
+GEMINI_API_KEY = "votre key api"
+GEMINI_MODEL = gemini-2.0-flash
+```
