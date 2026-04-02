@@ -158,7 +158,7 @@ DEFAULT_FALLBACK_ITEMS = [
 		"url": "https://www.tvmaze.com/shows/61362/shogun",
 		"genres": ["Drama", "History", "Adventure"],
 		"reason": "Production récente, très bien notée et visuellement forte.",
-	},
+	}, 
 ]
 
 

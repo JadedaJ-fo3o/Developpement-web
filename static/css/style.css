@@ -651,10 +651,6 @@ p.ranking-2025 {
   font-weight: bolder;
 }
 
-#annual-top10-content {
-  min-height: 260px;
-}
-
 /* ===== RECOMMENDATION ===== */
 
 #recommendation-main {
@@ -809,10 +805,10 @@ p.ranking-2025 {
   display: flex;
   flex-direction: row;
   gap: 15px;
-  overflow-x: auto; /* 横向滚动 */
+  overflow-x: auto;
   overflow-y: hidden;
 
-  max-height: 500px; /* 控制高度 */
+  max-height: 500px;
   padding: 10px;
 }
 
@@ -836,11 +832,11 @@ button.btn-action.ajouter {
 }
 
 ::-webkit-scrollbar {
-  height: 8px; /* 横向滚动条高度 */
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent; /* 背景 */
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
