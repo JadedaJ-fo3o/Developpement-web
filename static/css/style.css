@@ -127,7 +127,7 @@ div#series-container {
 /* Serie card */
 div.serie {
   width: 220px;
-  background-color: #1a1a1a;
+  background-color: #1a1a1a88;
   padding: 12px;
   box-sizing: border-box;
   display: flex;
@@ -199,10 +199,13 @@ div.serie p strong {
 #detaille-main {
   display: flex;
   flex-direction: row;
+  padding: 20px;
+  padding-top: 0;
 }
 .information-comment {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 .detaille-container {
   display: flex;
@@ -481,14 +484,148 @@ body.auth-page {
   gap: 30px;
 }
 
+/* afficher today */
 #today-schedule-block,
-#recommendation-block,
-#weekly-ranking-block,
+#recommendation-block, 
+#weekly-ranking-block, 
 #annual-top10-block {
-  background-color: rgba(0, 0, 0, 0.35);
-  border-radius: 12px;
-  padding: 20px;
-  box-sizing: border-box;
+    background-color: #1a1a1a88;
+    border-radius: 6px;
+    padding: 20px;
+}
+
+#recommendation-content, 
+#annual-top10-content {
+    min-height: 220px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#today-schedule-content {
+    max-height: 430px;
+    max-width: 800px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+#weekly-ranking-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.today-card {
+    margin: 20px;
+    margin-top: 10px;
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    width: 220px;
+    background-color: #1a1a1a88;
+    padding: 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    font-size: smaller;
+    flex-shrink: 0;  
+}
+
+p.today-time {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+img.today-img {
+    border-radius: 6px;
+    height: stretch;
+    width: stretch;
+}
+
+h3.today-name {
+    font-size: 14px;
+    color: white;
+    text-align: left;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+p.today-episode{
+    font-size: 12px;
+    color: white;
+    text-align: left;
+    width: 100%;
+    margin: 2px 0;
+}
+
+.today-episode strong {
+    color: #ff4444;
+}
+
+button#today-next {
+    width: fit-content;
+    margin-top: 20px;
+    margin-left: 20px;
+    border-radius: 6px;
+    border: 0.5px solid rgba(255, 255, 255, 0.25);
+    background: #1a1a1a88;
+    color: inherit;
+    font-size: 13px;
+    font-family: STXihei;
+    padding: 9px 12px;
+    cursor: pointer;
+    text-align: center;
+}
+
+img.ranking-poster {
+    width: 10%;
+    border-radius: 3px;
+}
+
+
+
+.ranking-item,
+.ranking-item-week {
+    width: stretch;
+    margin-bottom: 20px;
+    margin-top: 0;
+    border-radius: 6px;
+    border: 0.5px solid rgba(255, 255, 255, 0.25);
+    background: #1a1a1a88;
+    color: inherit;
+    font-size: 13px;
+    font-family: STXihei;
+    padding: 9px 12px;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+}
+
+.ranking-rating {
+  flex-grow: 1;
+}
+
+.ranking-rating strong{
+  color:#ff4444;
+}
+
+p.ranking-2025 {
+    flex-grow: 1;
+    margin-left: 5px;
+}
+
+.ranking-2025 strong{
+  color:#ff4444;
+}
+
+.ranking-details-2025 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 .block-header {
@@ -513,14 +650,7 @@ body.auth-page {
   font-weight: bolder;
 }
 
-#today-schedule-content,
-#recommendation-content,
-#weekly-ranking-content,
-#annual-top10-content {
-  min-height: 220px;
-}
 
-#weekly-ranking-content,
 #annual-top10-content {
   min-height: 260px;
 }
