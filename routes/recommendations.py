@@ -42,65 +42,63 @@ def recommendation_api():
 		return jsonify({'items': [], 'message': error_message}), 500 
 
 
-
 @recommendations_bp.route('/api/home-recommendations', methods=['GET'])
 def home_recommendations_api():
-	fallback_items, fallback_message = _fallback_payload()
+    username = session.get("user")
+    if not username:
+        fallback_items, fallback_message = fallback_payload()
+        return jsonify({
+            "items": fallback_items,
+            "mode": "fallback",
+            "message": fallback_message,
+        }), 200
 
-	username = session.get("user")
-	if not username:
-		return jsonify({
-			"items": fallback_items,
-			"mode": "fallback",
-			"message": fallback_message,
-		}), 200
+    user = User.get_by_username(username)
+    if user is None:
+        fallback_items, fallback_message = fallback_payload()
+        return jsonify({
+            "items": fallback_items,
+            "mode": "fallback",
+            "message": fallback_message,
+        }), 200
 
-	user = User.get_by_username(username)
-	if user is None:
-		return jsonify({
-			"items": fallback_items,
-			"mode": "fallback",
-			"message": fallback_message,
-		}), 200
+    rows = Regarde.query.filter_by(id_user=user.id_user).all()
+    if not rows:
+        fallback_items, fallback_message = fallback_payload()
+        return jsonify({
+            "items": fallback_items,
+            "mode": "fallback",
+            "message": fallback_message,
+        }), 200
 
-	rows = Regarde.query.filter_by(id_user=user.id_user).all()
-	if not rows:
-		return jsonify({
-			"items": fallback_items,
-			"mode": "fallback",
-			"message": fallback_message,
-		}), 200
+    records = []
+    for row in rows:
+        records.append({
+            "name_serie": row.name_serie,
+            "rating_value": row.rating_value,
+        })
 
-	records = []
- 
- 
-	for row in rows:
-		records.append({
-			'name_serie': row.name_serie,
-			'rating_value': row.rating_value,
-		})
+    try:
+        result = recommend_from_records(records, "Propose 5 séries TV adaptées à mes goûts.")
+        items = list(result.get("items") or [])[:5]
+    except Exception:
+        items = []
 
-	try:
-		result = recommend_from_records(records, "Propose 5 séries TV adaptées à mes goûts.")
-		items = list(result.get("items") or [])[:5]
-	except Exception:
-		items = []
+    items = dedupe_items(items)
 
-	items = _dedupe_items(items) #déduplication - la série
+    if len(items) < 5:
+        fallback_items, _ = fallback_payload()
+        items.extend(fallback_items)
+        items = dedupe_items(items)
 
-	if len(items) < 5: #garantie d'avoir 5 recommandations
-		fallback = _fallback_items()
-		items.extend(fallback)
-		items = _dedupe_items(items)
-
-	return jsonify({
-		"items": items[:5],
-		"mode": "personalized",
-		"message": "5 recommandations personnalisées par Gemini.",
-	}), 200
+    return jsonify({
+        "items": items[:5],
+        "mode": "personalized",
+        "message": "5 recommandations personnalisées par Gemini.",
+    }), 200
 
 #déduplication
-def _dedupe_items(items):
+def dedupe_items(items):
 	seen = set()
 	clean = []
 	for item in items:
@@ -160,17 +158,11 @@ DEFAULT_FALLBACK_ITEMS = [
 		"url": "https://www.tvmaze.com/shows/61362/shogun",
 		"genres": ["Drama", "History", "Adventure"],
 		"reason": "Production récente, très bien notée et visuellement forte.",
-	},
+	}, 
 ]
 
-def _fallback_items():
-	items = get_top_rated_last_five_years()[:5]
-	if items:
-		return items
-	return DEFAULT_FALLBACK_ITEMS[:]
 
-
-def _fallback_payload():
+def fallback_payload():
 	items = get_top_rated_last_five_years()[:5]
 	if items:
 		return items, "Top séries des cinq dernières années (TVMaze)."
